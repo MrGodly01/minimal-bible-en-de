@@ -1,31 +1,102 @@
+/* NOTHING-STYLE MINIMAL UI */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
 body {
-  background: #0e0e0e;
-  color: white;
-  font-family: Arial, sans-serif;
+  background: #000;
+  color: #eaeaea;
+  min-height: 100vh;
+  padding: 32px 20px;
+}
+
+/* Title */
+h1 {
   text-align: center;
-  padding: 20px;
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
 }
 
-.controls select {
-  padding: 10px;
-  margin: 5px;
-  font-size: 16px;
-}
-
-.bible {
+/* Controls */
+.controls {
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
   justify-content: center;
+  gap: 14px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+select {
+  background: #111;
+  color: #fff;
+  border: 1px solid #222;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  min-width: 90px;
+  outline: none;
+}
+
+select:focus {
+  border-color: #f5c518;
+}
+
+/* Bible layout */
+.bible {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .column {
-  width: 45%;
-  background: #1a1a1a;
-  padding: 20px;
-  border-radius: 10px;
+  background: #111;
+  border-radius: 20px;
+  padding: 26px;
+  min-height: 220px;
 }
 
-h2 {
-  color: gold;
+/* Column titles */
+.column h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+/* Accent */
+.column h2 {
+  color: #f5c518;
+}
+
+/* Verse text */
+.column p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #e6e6e6;
+}
+
+/* German placeholder */
+.column p:empty::before {
+  content: "—";
+  color: #444;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bible {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
 }
