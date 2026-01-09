@@ -200,26 +200,44 @@ function searchBible(query) {
             <div>${v.text}</div>
           `;
 
-          item.onclick = () => {
-            currentBook = book.name;
-            currentChapter = ch.chapter;
+         item.onclick = () => {
+  // 1️⃣ Switch book
+  currentBook = book.name;
+  bookSelect.value = book.name;
+  loadChapters();
 
-            bookSelect.value = book.name;
-            loadChapters();
-            chapterSelect.value = ch.chapter;
-            loadVerses();
+  // 2️⃣ Switch chapter
+  currentChapter = ch.chapter;
+  chapterSelect.value = ch.chapter;
+  loadVerses();
 
-            setTimeout(() => {
-              const verseId = `${book.name}-${ch.chapter}-${v.verse}`;
-              const verseEl = document.querySelector(
-                `.verse[data-id="${verseId}"]`
-              );
-              if (verseEl) {
-                verseEl.scrollIntoView({ behavior: "smooth", block: "center" });
-                verseEl.classList.add("search-hit");
-                setTimeout(() => verseEl.classList.remove("search-hit"), 1200);
-              }
-            }, 300);
+  // 3️⃣ Close search UI
+  searchScreen.classList.add("hidden");
+  searchInput.value = "";
+  searchResults.innerHTML = "";
+
+  // 4️⃣ Scroll to verse (wait for DOM)
+  setTimeout(() => {
+    const verseId = `${book.name}-${ch.chapter}-${v.verse}`;
+    const verseEl = document.querySelector(
+      `.verse[data-id="${verseId}"]`
+    );
+
+    if (verseEl) {
+      verseEl.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+      // Optional: flash animation
+      verseEl.classList.add("search-hit");
+      setTimeout(() => {
+        verseEl.classList.remove("search-hit");
+      }, 1200);
+    }
+  }, 300);
+};
+
 
             searchScreen.classList.add("hidden");
           };
@@ -241,3 +259,7 @@ openSearchBtn.onclick = () => {
   searchScreen.classList.remove("hidden");
   searchInput.focus();
 };
+.search-hit {
+  outline: 2px solid var(--accent);
+  border-radius: 10px;
+}
