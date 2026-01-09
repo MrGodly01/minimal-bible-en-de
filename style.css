@@ -135,3 +135,21 @@ select {
 .material-symbols-outlined {
   font-size: 24px;
 }
+.verse {
+  padding: 12px 10px;
+  margin: 4px 0;
+  border-radius: 10px;
+  line-height: 1.7;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.verse-num {
+  opacity: 0.5;
+  margin-right: 6px;
+  font-size: 0.85em;
+}
+
+.verse.highlight {
+  background: rgba(0, 180, 180, 0.25);
+}
