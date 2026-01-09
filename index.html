@@ -3,35 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <title>Minimal Bible</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Nothing-like font -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=3" />
+  <!-- Google Font (Pixel-like) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark">
 
-<header>
-  <h1>Minimal Bible</h1>
+  <!-- HEADER -->
+  <header>
+    <h1>Minimal Bible</h1>
+    <button id="themeToggle" class="icon-btn">
+      <span class="material-icons">dark_mode</span>
+    </button>
+  </header>
 
-  <div class="top-icons">
-    <button id="searchBtn">🔍</button>
-    <button id="themeToggle">◐</button>
-  </div>
-</header>
+  <!-- CONTROLS -->
+  <section class="controls">
+    <select id="book"></select>
+    <select id="chapter"></select>
+  </section>
 
-<div id="searchWrapper">
-  <input id="searchInput" placeholder="Search verse..." />
-</div>
+  <!-- BIBLE CONTENT -->
+  <main id="verses"></main>
 
-<div class="controls">
-  <select id="book"></select>
-  <select id="chapter"></select>
-</div>
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active">
+      <span class="material-icons">menu_book</span>
+      Bible
+    </button>
+    <button class="nav-btn">
+      <span class="material-icons">edit_note</span>
+      Notes
+    </button>
+    <button class="nav-btn">
+      <span class="material-icons">search</span>
+      Search
+    </button>
+    <button class="nav-btn">
+      <span class="material-icons">settings</span>
+      Settings
+    </button>
+  </nav>
 
-<main id="verses"></main>
-
-<script src="app.js?v=3"></script>
+  <script src="app.js"></script>
 </body>
 </html>
