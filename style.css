@@ -196,3 +196,13 @@ body.light .search-item {
   opacity: 0.6;
   margin-bottom: 4px;
 }
+.search-hit {
+  outline: 2px solid var(--accent);
+  animation: pulse 0.8s ease;
+}
+
+@keyframes pulse {
+  from {
+    background: rgba(26,115,232,0.25);
+  }
+}
