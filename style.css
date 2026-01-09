@@ -1,80 +1,93 @@
 :root {
   --bg: #000;
-  --text: #e6e6e6;
+  --text: #eaeaea;
   --muted: #777;
-  --highlight-blue: rgba(0, 200, 220, 0.35);
-  --highlight-green: rgba(0, 220, 150, 0.35);
-  --highlight-yellow: rgba(255, 210, 0, 0.35);
+
+  --hl-blue: rgba(0,180,200,.35);
+  --hl-green: rgba(0,200,140,.35);
+  --hl-yellow: rgba(255,200,0,.35);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: 'Inter', system-ui;
+  font-family: 'Space Mono', monospace;
 }
 
+/* HEADER */
 header {
+  position: sticky;
+  top: 0;
+  z-index: 999; /* 🔥 THIS FIXES ICONS */
+  background: #000;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 16px;
 }
 
-.icons button {
+.top-icons button {
   background: none;
   border: none;
   color: var(--text);
   font-size: 18px;
-  margin-left: 10px;
+  margin-left: 12px;
 }
 
+/* SEARCH (Nothing-style) */
+#searchWrapper {
+  display: none;
+  padding: 0 16px 8px;
+}
+
+#searchWrapper input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #111;
+  border-radius: 14px;
+  border: none;
+  color: var(--text);
+  font-family: inherit;
+}
+
+/* CONTROLS */
 .controls {
   display: flex;
   gap: 12px;
-  padding: 0 16px;
+  padding: 12px 16px;
 }
 
 select {
+  flex: 1;
   background: transparent;
-  color: var(--text);
-  border: 1px solid #444;
+  border: 1px solid #333;
   border-radius: 14px;
   padding: 10px 14px;
-}
-
-#searchBar {
-  padding: 0 16px;
-}
-
-#searchBar input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid #444;
   color: var(--text);
-  font-size: 16px;
-  padding: 8px 0;
+  font-family: inherit;
 }
 
-.hidden {
-  display: none;
-}
-
+/* VERSES */
 main {
   padding: 16px;
-  max-width: 700px;
+  max-width: 720px;
   margin: auto;
 }
 
 .verse {
   margin-bottom: 18px;
   line-height: 1.9;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .verse-number {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
   margin-right: 6px;
 }
 
@@ -84,6 +97,6 @@ main {
   display: inline;
 }
 
-.blue { background: var(--highlight-blue); }
-.green { background: var(--highlight-green); }
-.yellow { background: var(--highlight-yellow); }
+.blue { background: var(--hl-blue); }
+.green { background: var(--hl-green); }
+.yellow { background: var(--hl-yellow); }
