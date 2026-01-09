@@ -14,9 +14,10 @@
     <h1>Minimal Bible</h1>
 
     <!-- THEME TOGGLE -->
-    <button id="themeToggle" class="icon-btn" title="Toggle theme">
-      🌙
-    </button>
+   <button id="themeToggle">
+  <span class="material-symbols-outlined">dark_mode</span>
+</button>
+
   </header>
 
   <!-- APP -->
@@ -47,11 +48,23 @@
   </main>
 
   <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <button class="nav-item active" data-target="bible">📖<span>Bible</span></button>
-    <button class="nav-item" data-target="notes">📝<span>Notes</span></button>
-    <button class="nav-item" data-target="search">🔍<span>Search</span></button>
-  </nav>
+ <nav class="bottom-nav">
+  <button class="nav-item">
+    <span class="material-symbols-outlined">menu_book</span>
+    <span>Bible</span>
+  </button>
+
+  <button class="nav-item">
+    <span class="material-symbols-outlined">edit_note</span>
+    <span>Notes</span>
+  </button>
+
+  <button class="nav-item">
+    <span class="material-symbols-outlined">search</span>
+    <span>Search</span>
+  </button>
+</nav>
+
 
   <script src="app.js"></script>
 </body>
