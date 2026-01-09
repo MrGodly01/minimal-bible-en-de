@@ -2,32 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Minimal Bible EN / DE</title>
+  <title>Minimal Bible</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
 
+<body class="dark">
+
+<header>
   <h1>Minimal Bible</h1>
 
-  <div class="controls">
-    <select id="book"></select>
-    <select id="chapter"></select>
-    <select id="verse"></select>
+  <button id="themeToggle" aria-label="Toggle theme">
+    ☀︎
+  </button>
+</header>
+
+<div class="controls">
+  <select id="book"></select>
+  <select id="chapter"></select>
+</div>
+
+<div class="reader">
+  <div id="englishText" class="verses">
+    Loading…
   </div>
+</div>
 
-  <div class="bible">
-    <div class="column">
-      <h2>English (KJV)</h2>
-      <p id="englishText">Loading...</p>
-    </div>
-
-    <div class="column">
-      <h2>German</h2>
-      <p>German coming soon</p>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
