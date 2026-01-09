@@ -3,53 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <title>Minimal Bible</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- Google Font (Pixel-like) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="dark">
+<body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>Minimal Bible</h1>
-    <button id="themeToggle" class="icon-btn">
-      <span class="material-icons">dark_mode</span>
-    </button>
-  </header>
+  <!-- APP CONTENT -->
+  <main id="app">
 
-  <!-- CONTROLS -->
-  <section class="controls">
-    <select id="book"></select>
-    <select id="chapter"></select>
-  </section>
+    <!-- HEADER -->
+    <header class="top-bar">
+      <h1>Minimal Bible</h1>
+    </header>
 
-  <!-- BIBLE CONTENT -->
-  <main id="verses"></main>
+    <!-- BIBLE SCREEN -->
+    <section id="screen-bible" class="screen active">
+      <div class="controls">
+        <select id="book"></select>
+        <select id="chapter"></select>
+      </div>
+
+      <div id="verses" class="verses"></div>
+    </section>
+
+    <!-- NOTES SCREEN -->
+    <section id="screen-notes" class="screen">
+      <h2>Notes</h2>
+      <p class="muted">Notes coming soon ✍️</p>
+    </section>
+
+    <!-- SEARCH SCREEN -->
+    <section id="screen-search" class="screen">
+      <input type="text" placeholder="Search verse..." class="search-box">
+      <p class="muted">Search coming soon 🔍</p>
+    </section>
+
+  </main>
 
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
-    <button class="nav-btn active">
-      <span class="material-icons">menu_book</span>
-      Bible
-    </button>
-    <button class="nav-btn">
-      <span class="material-icons">edit_note</span>
-      Notes
-    </button>
-    <button class="nav-btn">
-      <span class="material-icons">search</span>
-      Search
-    </button>
-    <button class="nav-btn">
-      <span class="material-icons">settings</span>
-      Settings
-    </button>
+    <button class="nav-item active" data-target="bible">📖<span>Bible</span></button>
+    <button class="nav-item" data-target="notes">📝<span>Notes</span></button>
+    <button class="nav-item" data-target="search">🔍<span>Search</span></button>
   </nav>
 
   <script src="app.js"></script>
