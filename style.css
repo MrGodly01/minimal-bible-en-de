@@ -32,8 +32,17 @@ select {
   padding: 12px;
   border-radius: 12px;
   margin-bottom: 8px;
-  background: #111;
   cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+/* Tap / press effect */
+.verse:active {
+  transform: scale(0.97);
 }
 
 .verse-num {
@@ -58,11 +67,27 @@ select {
   position: fixed;
   bottom: 20px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+
   background: #222;
   padding: 12px;
   border-radius: 16px;
   z-index: 999;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* When visible */
+.palette:not(.hidden) {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.hidden {
+  pointer-events: none;
 }
 
 .hidden {
@@ -91,3 +116,15 @@ select {
 .palette-colors span[data-color="highlight-green"] { background: #22c55e; }
 .palette-colors span[data-color="highlight-blue"] { background: #38bdf8; }
 .palette-colors span[data-color="highlight-pink"] { background: #f472b6; }
+.highlight-yellow,
+.highlight-green,
+.highlight-blue,
+.highlight-pink {
+  animation: highlightFade 0.25s ease;
+}
+
+@keyframes highlightFade {
+  from {
+    background-color: transparent;
+  }
+}
