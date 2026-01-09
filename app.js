@@ -2,7 +2,7 @@ const bookSelect = document.getElementById("book");
 const chapterSelect = document.getElementById("chapter");
 const versesDiv = document.getElementById("verses");
 const searchBtn = document.getElementById("searchBtn");
-const searchBar = document.getElementById("searchBar");
+const searchWrapper = document.getElementById("searchWrapper");
 const searchInput = document.getElementById("searchInput");
 const themeToggle = document.getElementById("themeToggle");
 
@@ -67,17 +67,17 @@ function toggleHighlight(el) {
   localStorage.setItem("hl", JSON.stringify(highlights));
 }
 
-searchBtn.onclick = () => searchBar.classList.toggle("hidden");
-
-searchInput.oninput = () => {
-  document.querySelectorAll(".verse").forEach(v => {
-    v.style.display = v.innerText.toLowerCase().includes(searchInput.value.toLowerCase())
-      ? "block" : "none";
-  });
+/* SEARCH */
+searchBtn.onclick = () => {
+  searchWrapper.style.display =
+    searchWrapper.style.display === "block" ? "none" : "block";
 };
 
-themeToggle.onclick = () => {
-  document.body.classList.toggle("light");
+searchInput.oninput = () => {
+  const q = searchInput.value.toLowerCase();
+  document.querySelectorAll(".verse").forEach(v => {
+    v.style.display = v.innerText.toLowerCase().includes(q) ? "block" : "none";
+  });
 };
 
 bookSelect.onchange = loadChapters;
