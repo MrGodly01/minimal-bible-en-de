@@ -110,3 +110,25 @@ body.light .bottom-nav {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* Highlight colors */
+.highlight-yellow {
+  background: rgba(255, 214, 10, 0.25);
+}
+
+.highlight-blue {
+  background: rgba(0, 180, 216, 0.25);
+}
+
+.highlight-green {
+  background: rgba(0, 200, 83, 0.25);
+}
+
+.highlight-pink {
+  background: rgba(255, 99, 132, 0.25);
+}
+
+/* Verse clickable */
+.verse {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
