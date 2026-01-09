@@ -174,6 +174,7 @@ chapterSelect.onchange = () => {
 // =======================
 themeToggle.onclick = () => {
   const isLight = document.body.classList.toggle("light");
+  themeToggle.textContent = isLight ? "☀️" : "🌙";
   localStorage.setItem("theme", isLight ? "light" : "dark");
 };
 
