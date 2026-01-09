@@ -9,6 +9,9 @@ const savedTheme = localStorage.getItem("theme");
 if (savedTheme === "light") {
   document.body.classList.add("light");
 }
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const searchScreen = document.getElementById("searchScreen");
 
 // STATE
 let bible = {};
@@ -178,3 +181,54 @@ themeToggle.onclick = () => {
   localStorage.setItem("theme", isLight ? "light" : "dark");
 };
 
+function searchBible(query) {
+  searchResults.innerHTML = "";
+  if (!query || query.length < 2) return;
+
+  const q = query.toLowerCase();
+
+  bible.forEach(book => {
+    book.chapters.forEach(ch => {
+      ch.verses.forEach(v => {
+        if (v.text.toLowerCase().includes(q)) {
+          const item = document.createElement("div");
+          item.className = "search-item";
+
+          item.innerHTML = `
+            <div class="search-ref">${book.name} ${ch.chapter}:${v.verse}</div>
+            <div>${v.text}</div>
+          `;
+
+          item.onclick = () => {
+            currentBook = book.name;
+            currentChapter = ch.chapter;
+
+            bookSelect.value = book.name;
+            loadChapters();
+            chapterSelect.value = ch.chapter;
+            loadVerses();
+
+            setTimeout(() => {
+              const verseId = `${book.name}-${ch.chapter}-${v.verse}`;
+              const verseEl = document.querySelector(
+                `.verse[data-id="${verseId}"]`
+              );
+              if (verseEl) {
+                verseEl.scrollIntoView({ behavior: "smooth", block: "center" });
+                verseEl.classList.add("search-hit");
+                setTimeout(() => verseEl.classList.remove("search-hit"), 1200);
+              }
+            }, 300);
+
+            searchScreen.classList.add("hidden");
+          };
+
+          searchResults.appendChild(item);
+        }
+      });
+    });
+  });
+}
+searchInput.addEventListener("input", (e) => {
+  searchBible(e.target.value);
+});
