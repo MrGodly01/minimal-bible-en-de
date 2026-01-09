@@ -1,52 +1,15 @@
-/* GLOBAL */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #000;
-  color: #fff;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   font-family: 'Inter', system-ui, sans-serif;
   background: #000;
   color: #fff;
+  margin: 0;
   padding-bottom: 80px;
-}
-
-body.light {
-  background: #f5f5f5;
-  color: #111;
 }
 
 header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 16px;
-}
-
-h1 {
-  font-size: 28px;
-  font-weight: 700;
-}
-
-#themeToggle {
-  font-size: 20px;
-  background: none;
-  border: none;
-  color: inherit;
-  cursor: pointer;
 }
 
 .controls {
@@ -57,134 +20,47 @@ h1 {
 
 select {
   flex: 1;
-  padding: 14px;
-  border-radius: 14px;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
-  background: #111;
-  color: #fff;
 }
 
-body.light select {
-  background: #fff;
-  color: #000;
-}
-
-main {
+#verses {
   padding: 16px;
 }
 
 .verse {
-  margin-bottom: 16px;
-  line-height: 1.7;
-  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
   cursor: pointer;
-  padding: 6px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
 }
 
 .verse-num {
-  opacity: 0.5;
-  margin-right: 6px;
-  font-size: 13px;
-}
-
-.highlight-yellow {
-  background: #f4d35e33;
-}
-
-.highlight-blue {
-  background: #4cc9f033;
-}
-
-.highlight-green {
-  background: #52b78833;
-}
-
-/* Bottom Nav */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  background: #0b0b0b;
-  border-top: 1px solid #222;
-}
-
-body.light .bottom-nav {
-  background: #fff;
-  border-top: 1px solid #ddd;
-}
-
-.bottom-nav button {
-  background: none;
-  border: none;
-  color: inherit;
-  font-size: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
   opacity: 0.6;
+  margin-right: 6px;
 }
 
-.bottom-nav button.active {
-  opacity: 1;
-}
-
-.bottom-nav span {
-  font-size: 12px;
-}
-/* LIGHT THEME */
-body.light {
-  background: #fafafa;
-  color: #111;
-}
-
-body.light .verse {
-  color: #111;
-}
-
-body.light .bottom-nav {
-  background: #ffffff;
-  border-top: 1px solid #ddd;
-}
-
-body.light .highlight-yellow {
-  background: #fff3b0;
-}
-
-body.light .highlight-blue {
-  background: #dbeafe;
-}
-
-body.light .highlight-green {
-  background: #dcfce7;
-}
-/* Highlight Palette */
+/* Palette */
 .palette {
   position: fixed;
-  bottom: 70px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background: #111;
+  padding: 12px;
   border-radius: 16px;
-  padding: 12px 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  z-index: 1000;
+  z-index: 999;
 }
 
-.palette.hidden {
+.hidden {
   display: none;
 }
 
 .palette-colors {
   display: flex;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .palette-colors span {
@@ -194,33 +70,12 @@ body.light .highlight-green {
   cursor: pointer;
 }
 
-/* Highlight colors */
-.highlight-yellow { background: #facc15; }
-.highlight-green { background: #22c55e; }
-.highlight-blue { background: #38bdf8; }
-.highlight-pink { background: #f472b6; }
+.highlight-yellow { background: rgba(250, 204, 21, 0.35); }
+.highlight-green { background: rgba(34, 197, 94, 0.35); }
+.highlight-blue { background: rgba(56, 189, 248, 0.35); }
+.highlight-pink { background: rgba(244, 114, 182, 0.35); }
 
-#clearHighlight {
-  width: 100%;
-  background: none;
-  border: none;
-  color: #aaa;
-  font-size: 14px;
-  cursor: pointer;
-}
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.actions button {
-  background: none;
-  border: none;
-  color: var(--text);
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-.actions button:active {
-  opacity: 1;
-}
+.palette-colors span[data-color="highlight-yellow"] { background: #facc15; }
+.palette-colors span[data-color="highlight-green"] { background: #22c55e; }
+.palette-colors span[data-color="highlight-blue"] { background: #38bdf8; }
+.palette-colors span[data-color="highlight-pink"] { background: #f472b6; }
