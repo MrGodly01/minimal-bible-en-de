@@ -208,3 +208,19 @@ body.light .highlight-green {
   font-size: 14px;
   cursor: pointer;
 }
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.actions button:active {
+  opacity: 1;
+}
