@@ -2,35 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Holy Bible — EN | DE</title>
+  <title>Minimal Bible EN / DE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
-  <header>
-    <h1>Holy Bible</h1>
-    <p>English (KJV) • Deutsch (Luther 1912)</p>
-  </header>
 
-  <main>
-    <div id="nav">
-      <select id="book"></select>
-      <select id="chapter"></select>
-      <select id="verse"></select>
+  <h1>Minimal Bible</h1>
+
+  <div class="controls">
+    <select id="book"></select>
+    <select id="chapter"></select>
+    <select id="verse"></select>
+  </div>
+
+  <div class="bible">
+    <div class="column">
+      <h2>English</h2>
+      <p id="en"></p>
     </div>
 
-    <div class="verse">
-      <div class="col">
-        <h3>English</h3>
-        <p id="en"></p>
-      </div>
-      <div class="col">
-        <h3>Deutsch</h3>
-        <p id="de"></p>
-      </div>
+    <div class="column">
+      <h2>German</h2>
+      <p id="de"></p>
     </div>
-  </main>
+  </div>
 
   <script src="app.js"></script>
 </body>
