@@ -80,6 +80,7 @@ main {
   cursor: pointer;
   padding: 6px;
   border-radius: 8px;
+  transition: background 0.2s ease;
 }
 
 .verse-num {
@@ -136,4 +137,30 @@ body.light .bottom-nav {
 
 .bottom-nav span {
   font-size: 12px;
+}
+/* LIGHT THEME */
+body.light {
+  background: #fafafa;
+  color: #111;
+}
+
+body.light .verse {
+  color: #111;
+}
+
+body.light .bottom-nav {
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+}
+
+body.light .highlight-yellow {
+  background: #fff3b0;
+}
+
+body.light .highlight-blue {
+  background: #dbeafe;
+}
+
+body.light .highlight-green {
+  background: #dcfce7;
 }
