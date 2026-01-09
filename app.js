@@ -1,84 +1,67 @@
 const bookSelect = document.getElementById("book");
 const chapterSelect = document.getElementById("chapter");
-const versesDiv = document.getElementById("verses");
-const searchBtn = document.getElementById("searchBtn");
-const searchWrapper = document.getElementById("searchWrapper");
-const searchInput = document.getElementById("searchInput");
+const versesEl = document.getElementById("verses");
 const themeToggle = document.getElementById("themeToggle");
 
 let bible = {};
-let highlights = JSON.parse(localStorage.getItem("hl") || "{}");
+let currentBook = "";
+let currentChapter = "";
 
+// THEME
+themeToggle.onclick = () => {
+  document.body.classList.toggle("light");
+};
+
+// LOAD BIBLE
 fetch("data/kjv.json")
-  .then(r => r.json())
-  .then(d => {
-    bible = d.books.reduce((o,b)=>{o[b.name]=b.chapters;return o;},{});
+  .then(res => res.json())
+  .then(data => {
+    bible = data.books.reduce((acc, b) => {
+      acc[b.name] = b.chapters;
+      return acc;
+    }, {});
     loadBooks();
   });
 
+// BOOKS
 function loadBooks() {
   bookSelect.innerHTML = "";
-  Object.keys(bible).forEach(b => {
-    bookSelect.innerHTML += `<option>${b}</option>`;
+  Object.keys(bible).forEach(book => {
+    bookSelect.innerHTML += `<option>${book}</option>`;
   });
+  currentBook = bookSelect.value;
   loadChapters();
 }
 
+// CHAPTERS
 function loadChapters() {
   chapterSelect.innerHTML = "";
-  bible[bookSelect.value].forEach((_,i)=>{
-    chapterSelect.innerHTML += `<option>${i+1}</option>`;
+  bible[currentBook].forEach(ch => {
+    chapterSelect.innerHTML += `<option>${ch.chapter}</option>`;
   });
+  currentChapter = chapterSelect.value;
   loadVerses();
 }
 
+// VERSES
 function loadVerses() {
-  versesDiv.innerHTML = "";
-  const verses = bible[bookSelect.value][chapterSelect.value-1].verses;
-
-  verses.forEach(v => {
-    const key = `${bookSelect.value}-${chapterSelect.value}-${v.verse}`;
-    const color = highlights[key] || "";
-
+  versesEl.innerHTML = "";
+  const chapter = bible[currentBook].find(c => c.chapter == currentChapter);
+  chapter.verses.forEach(v => {
     const div = document.createElement("div");
     div.className = "verse";
-    div.innerHTML = `
-      <span class="verse-number">${v.verse}</span>
-      <span class="verse-text ${color}" data-key="${key}">
-        ${v.text}
-      </span>
-    `;
-    div.querySelector(".verse-text").onclick = e => toggleHighlight(e.target);
-    versesDiv.appendChild(div);
+    div.innerHTML = `<span class="verse-num">${v.verse}</span>${v.text}`;
+    versesEl.appendChild(div);
   });
 }
 
-function toggleHighlight(el) {
-  const key = el.dataset.key;
-  const colors = ["", "blue", "green", "yellow"];
-  const current = highlights[key] || "";
-  const next = colors[(colors.indexOf(current) + 1) % colors.length];
-
-  el.className = "verse-text " + next;
-
-  if (next) highlights[key] = next;
-  else delete highlights[key];
-
-  localStorage.setItem("hl", JSON.stringify(highlights));
-}
-
-/* SEARCH */
-searchBtn.onclick = () => {
-  searchWrapper.style.display =
-    searchWrapper.style.display === "block" ? "none" : "block";
+// EVENTS
+bookSelect.onchange = () => {
+  currentBook = bookSelect.value;
+  loadChapters();
 };
 
-searchInput.oninput = () => {
-  const q = searchInput.value.toLowerCase();
-  document.querySelectorAll(".verse").forEach(v => {
-    v.style.display = v.innerText.toLowerCase().includes(q) ? "block" : "none";
-  });
+chapterSelect.onchange = () => {
+  currentChapter = chapterSelect.value;
+  loadVerses();
 };
-
-bookSelect.onchange = loadChapters;
-chapterSelect.onchange = loadVerses;
