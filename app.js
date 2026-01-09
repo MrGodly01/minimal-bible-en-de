@@ -1,67 +1,84 @@
 const bookSelect = document.getElementById("book");
 const chapterSelect = document.getElementById("chapter");
 const versesDiv = document.getElementById("verses");
-const searchInput = document.getElementById("search");
+const searchBtn = document.getElementById("searchBtn");
+const searchBar = document.getElementById("searchBar");
+const searchInput = document.getElementById("searchInput");
 const themeToggle = document.getElementById("themeToggle");
 
 let bible = {};
-let highlights = JSON.parse(localStorage.getItem("highlights") || "{}");
+let highlights = JSON.parse(localStorage.getItem("hl") || "{}");
 
 fetch("data/kjv.json")
   .then(r => r.json())
   .then(d => {
-    bible = d.books.reduce((a,b)=>{a[b.name]=b.chapters;return a;},{});
+    bible = d.books.reduce((o,b)=>{o[b.name]=b.chapters;return o;},{});
     loadBooks();
   });
 
-function loadBooks(){
-  bookSelect.innerHTML="";
-  Object.keys(bible).forEach(b=>{
-    bookSelect.innerHTML+=`<option>${b}</option>`;
+function loadBooks() {
+  bookSelect.innerHTML = "";
+  Object.keys(bible).forEach(b => {
+    bookSelect.innerHTML += `<option>${b}</option>`;
   });
   loadChapters();
 }
 
-function loadChapters(){
-  chapterSelect.innerHTML="";
+function loadChapters() {
+  chapterSelect.innerHTML = "";
   bible[bookSelect.value].forEach((_,i)=>{
-    chapterSelect.innerHTML+=`<option>${i+1}</option>`;
+    chapterSelect.innerHTML += `<option>${i+1}</option>`;
   });
   loadVerses();
 }
 
-function loadVerses(){
-  versesDiv.innerHTML="";
-  const verses=bible[bookSelect.value][chapterSelect.value-1].verses;
-  verses.forEach(v=>{
-    const key=`${bookSelect.value}-${chapterSelect.value}-${v.verse}`;
-    const div=document.createElement("div");
-    div.className="verse "+(highlights[key]||"");
-    div.innerHTML=`<span class="verse-number">${v.verse}</span>${v.text}`;
-    div.onclick=()=>toggleHighlight(key,div);
+function loadVerses() {
+  versesDiv.innerHTML = "";
+  const verses = bible[bookSelect.value][chapterSelect.value-1].verses;
+
+  verses.forEach(v => {
+    const key = `${bookSelect.value}-${chapterSelect.value}-${v.verse}`;
+    const color = highlights[key] || "";
+
+    const div = document.createElement("div");
+    div.className = "verse";
+    div.innerHTML = `
+      <span class="verse-number">${v.verse}</span>
+      <span class="verse-text ${color}" data-key="${key}">
+        ${v.text}
+      </span>
+    `;
+    div.querySelector(".verse-text").onclick = e => toggleHighlight(e.target);
     versesDiv.appendChild(div);
   });
 }
 
-function toggleHighlight(key,el){
-  const colors=["","highlight-blue","highlight-green","highlight-yellow"];
-  const current=highlights[key]||"";
-  const next=colors[(colors.indexOf(current)+1)%colors.length];
-  el.className="verse "+next;
-  if(next) highlights[key]=next;
+function toggleHighlight(el) {
+  const key = el.dataset.key;
+  const colors = ["", "blue", "green", "yellow"];
+  const current = highlights[key] || "";
+  const next = colors[(colors.indexOf(current) + 1) % colors.length];
+
+  el.className = "verse-text " + next;
+
+  if (next) highlights[key] = next;
   else delete highlights[key];
-  localStorage.setItem("highlights",JSON.stringify(highlights));
+
+  localStorage.setItem("hl", JSON.stringify(highlights));
 }
 
-bookSelect.onchange=loadChapters;
-chapterSelect.onchange=loadVerses;
+searchBtn.onclick = () => searchBar.classList.toggle("hidden");
 
-searchInput.oninput=()=>{
-  document.querySelectorAll(".verse").forEach(v=>{
-    v.style.display=v.textContent.toLowerCase().includes(searchInput.value.toLowerCase())?"block":"none";
+searchInput.oninput = () => {
+  document.querySelectorAll(".verse").forEach(v => {
+    v.style.display = v.innerText.toLowerCase().includes(searchInput.value.toLowerCase())
+      ? "block" : "none";
   });
 };
 
-themeToggle.onclick=()=>{
+themeToggle.onclick = () => {
   document.body.classList.toggle("light");
 };
+
+bookSelect.onchange = loadChapters;
+chapterSelect.onchange = loadVerses;
