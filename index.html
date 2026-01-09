@@ -8,11 +8,26 @@
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 </head>
-<!-- Highlight Palette -->
+<body>
+
+<header>
+  <h1>Minimal Bible</h1>
+  <button id="themeToggle">🌙</button>
+</header>
+
+<div class="controls">
+  <select id="book"></select>
+  <select id="chapter"></select>
+</div>
+
+<!-- VERSES CONTAINER (IMPORTANT ID) -->
+<main id="verses"></main>
+
+<!-- HIGHLIGHT PALETTE -->
 <div id="highlightPalette" class="palette hidden">
   <div class="palette-colors">
     <span data-color="highlight-yellow"></span>
@@ -23,34 +38,6 @@
   <button id="clearHighlight">Clear</button>
 </div>
 
-<body class="dark">
-
-  <!-- HEADER -->
-  <header>
-    <h1>Minimal Bible</h1>
-    <button id="themeToggle">🌙</button>
-  </header>
-<div class="actions">
-  <button onclick="undoHighlight()">↩ Undo</button>
-  <button onclick="clearAllHighlights()">✖ Clear</button>
-</div>
-
-  <!-- CONTROLS -->
-  <div class="controls">
-    <select id="book"></select>
-    <select id="chapter"></select>
-  </div>
-
-  <!-- VERSES -->
-  <main id="verses"></main>
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <button class="active">📖<span>Bible</span></button>
-    <button>📝<span>Notes</span></button>
-    <button>🔍<span>Search</span></button>
-  </nav>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
