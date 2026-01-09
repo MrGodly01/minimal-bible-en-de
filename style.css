@@ -132,3 +132,6 @@ select {
   color: var(--accent);
   transform: translateY(-4px);
 }
+.material-symbols-outlined {
+  font-size: 24px;
+}
