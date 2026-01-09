@@ -8,47 +8,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
-  
-  <!-- SEARCH SCREEN -->
-<section id="searchScreen" class="search-screen hidden">
-  <input
-    id="searchInput"
-    type="text"
-    placeholder="Search Bible"
-    autocomplete="off"
-  />
-  <div id="searchResults"></div>
-</section>
 
 <body>
 
-<header>
-  <h1>Minimal Bible</h1>
-  <button id="openSearch">🔍</button>
-  <button id="themeToggle">🌙</button>
-</header>
+  <!-- HEADER -->
+  <header>
+    <h1>Minimal Bible</h1>
+    <button id="openSearch">🔍</button>
+    <button id="themeToggle">🌙</button>
+  </header>
 
-<div class="controls">
-  <select id="book"></select>
-  <select id="chapter"></select>
-</div>
-
-<main id="verses"></main>
-
-<!-- DEBUG: THIS MUST APPEAR -->
-<div id="debug">DEBUG READY</div>
-
-<!-- HIGHLIGHT PALETTE -->
-<div id="highlightPalette" class="palette hidden">
-  <div class="palette-colors">
-    <span data-color="highlight-yellow"></span>
-    <span data-color="highlight-green"></span>
-    <span data-color="highlight-blue"></span>
-    <span data-color="highlight-pink"></span>
+  <!-- CONTROLS -->
+  <div class="controls">
+    <select id="book"></select>
+    <select id="chapter"></select>
   </div>
-  <button id="clearHighlight">Clear</button>
-</div>
 
-<script src="app.js"></script>
+  <!-- VERSES -->
+  <main id="verses"></main>
+
+  <!-- SEARCH SCREEN -->
+  <section id="searchScreen" class="search-screen hidden">
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Search Bible"
+      autocomplete="off"
+    />
+    <div id="searchResults"></div>
+  </section>
+
+  <!-- HIGHLIGHT PALETTE -->
+  <div id="highlightPalette" class="palette hidden">
+    <div class="palette-colors">
+      <span data-color="highlight-yellow"></span>
+      <span data-color="highlight-green"></span>
+      <span data-color="highlight-blue"></span>
+      <span data-color="highlight-pink"></span>
+    </div>
+    <button id="clearHighlight">Clear</button>
+  </div>
+
+  <!-- SCRIPT -->
+  <script src="app.js"></script>
+
 </body>
 </html>
