@@ -1,55 +1,61 @@
 const bookSelect = document.getElementById("book");
 const chapterSelect = document.getElementById("chapter");
 const verseSelect = document.getElementById("verse");
+const enBox = document.getElementById("englishText");
+const deBox = document.getElementById("germanText");
 
-const enText = document.getElementById("en");
-const deText = document.getElementById("de");
+// Only John for now
+const BOOKS = ["John"];
 
-let bible = {};
+BOOKS.forEach(book => {
+  const opt = document.createElement("option");
+  opt.value = book;
+  opt.textContent = book;
+  bookSelect.appendChild(opt);
+});
 
-async function loadBook(book) {
+bookSelect.addEventListener("change", loadBook);
+chapterSelect.addEventListener("change", loadChapter);
+verseSelect.addEventListener("change", loadVerse);
+
+let bibleData = {};
+
+async function loadBook() {
+  const book = bookSelect.value;
   const res = await fetch(`data/${book}.json`);
-  bible = await res.json();
-  populateChapters();
-}
+  bibleData = await res.json();
 
-function populateBooks() {
-  bookSelect.innerHTML = `<option value="John">John</option>`;
-  loadBook("John");
-}
-
-function populateChapters() {
   chapterSelect.innerHTML = "";
-  Object.keys(bible).forEach(ch => {
+  verseSelect.innerHTML = "";
+  enBox.textContent = "";
+  deBox.textContent = "";
+
+  Object.keys(bibleData).forEach(ch => {
     const opt = document.createElement("option");
     opt.value = ch;
     opt.textContent = ch;
     chapterSelect.appendChild(opt);
   });
-  populateVerses();
 }
 
-function populateVerses() {
+function loadChapter() {
+  const ch = chapterSelect.value;
   verseSelect.innerHTML = "";
-  const chapter = chapterSelect.value;
-  Object.keys(bible[chapter]).forEach(v => {
+  enBox.textContent = "";
+  deBox.textContent = "";
+
+  Object.keys(bibleData[ch]).forEach(v => {
     const opt = document.createElement("option");
     opt.value = v;
     opt.textContent = v;
     verseSelect.appendChild(opt);
   });
-  showVerse();
 }
 
-function showVerse() {
-  const c = chapterSelect.value;
+function loadVerse() {
+  const ch = chapterSelect.value;
   const v = verseSelect.value;
-  enText.textContent = bible[c][v].en;
-  deText.textContent = bible[c][v].de;
+
+  enBox.textContent = bibleData[ch][v].en;
+  deBox.textContent = bibleData[ch][v].de;
 }
-
-bookSelect.onchange = () => loadBook(bookSelect.value);
-chapterSelect.onchange = populateVerses;
-verseSelect.onchange = showVerse;
-
-populateBooks();
