@@ -127,3 +127,23 @@ chapterSelect.onchange = () => {
   currentChapter = chapterSelect.value;
   loadVerses();
 };
+// Bottom navigation logic
+const navItems = document.querySelectorAll(".nav-item");
+const screens = document.querySelectorAll(".screen");
+
+navItems.forEach(btn => {
+  btn.addEventListener("click", () => {
+    // Active tab
+    navItems.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // Switch screen
+    const target = btn.dataset.target;
+    screens.forEach(screen => {
+      screen.classList.remove("active");
+      if (screen.id === "screen-" + target) {
+        screen.classList.add("active");
+      }
+    });
+  });
+});
