@@ -3,65 +3,79 @@ const chapterSelect = document.getElementById("chapter");
 const verseSelect = document.getElementById("verse");
 const englishText = document.getElementById("englishText");
 
-let bibleData = [];
+let bible = null;
 
-// Load Bible
+// Load KJV Bible
 fetch("data/kjv.json")
   .then(res => res.json())
   .then(data => {
-    bibleData = data.books;
+    bible = data;
     loadBooks();
   })
   .catch(err => {
-    englishText.textContent = "Failed to load Bible";
+    englishText.textContent = "Failed to load Bible data";
     console.error(err);
   });
 
 // Load books
 function loadBooks() {
   bookSelect.innerHTML = "";
-  bibleData.forEach((book, index) => {
+
+  bible.books.forEach((book, index) => {
     const opt = document.createElement("option");
     opt.value = index;
     opt.textContent = book.name;
     bookSelect.appendChild(opt);
   });
+
   loadChapters();
 }
 
 // Load chapters
 function loadChapters() {
-  const book = bibleData[bookSelect.value];
   chapterSelect.innerHTML = "";
-  book.chapters.forEach((ch, index) => {
+
+  const bookIndex = bookSelect.value;
+  const chapters = bible.books[bookIndex].chapters;
+
+  chapters.forEach((ch, index) => {
     const opt = document.createElement("option");
     opt.value = index;
     opt.textContent = ch.chapter;
     chapterSelect.appendChild(opt);
   });
+
   loadVerses();
 }
 
 // Load verses
 function loadVerses() {
-  const chapter =
-    bibleData[bookSelect.value].chapters[chapterSelect.value];
   verseSelect.innerHTML = "";
-  chapter.verses.forEach((v, index) => {
+
+  const bookIndex = bookSelect.value;
+  const chapterIndex = chapterSelect.value;
+  const verses = bible.books[bookIndex].chapters[chapterIndex].verses;
+
+  verses.forEach((v, index) => {
     const opt = document.createElement("option");
     opt.value = index;
     opt.textContent = v.verse;
     verseSelect.appendChild(opt);
   });
+
   showVerse();
 }
 
-// Show verse
+// Show verse text
 function showVerse() {
+  const bookIndex = bookSelect.value;
+  const chapterIndex = chapterSelect.value;
+  const verseIndex = verseSelect.value;
+
   const verse =
-    bibleData[bookSelect.value]
-      .chapters[chapterSelect.value]
-      .verses[verseSelect.value];
+    bible.books[bookIndex]
+      .chapters[chapterIndex]
+      .verses[verseIndex];
 
   englishText.textContent = verse.text;
 }
