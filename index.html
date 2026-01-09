@@ -8,15 +8,20 @@
 </head>
 <body>
 
-  <!-- APP CONTENT -->
+  <!-- HEADER -->
+  <header class="top-bar">
+    <h1>Minimal Bible</h1>
+
+    <!-- THEME TOGGLE -->
+    <button id="themeToggle" class="icon-btn" title="Toggle theme">
+      🌙
+    </button>
+  </header>
+
+  <!-- APP -->
   <main id="app">
 
-    <!-- HEADER -->
-    <header class="top-bar">
-      <h1>Minimal Bible</h1>
-    </header>
-
-    <!-- BIBLE SCREEN -->
+    <!-- BIBLE -->
     <section id="screen-bible" class="screen active">
       <div class="controls">
         <select id="book"></select>
@@ -26,16 +31,16 @@
       <div id="verses" class="verses"></div>
     </section>
 
-    <!-- NOTES SCREEN -->
+    <!-- NOTES -->
     <section id="screen-notes" class="screen">
-      <h2>Notes</h2>
-      <p class="muted">Notes coming soon ✍️</p>
+      <h2>📝 Notes</h2>
+      <p class="muted">Notes coming soon</p>
     </section>
 
-    <!-- SEARCH SCREEN -->
+    <!-- SEARCH -->
     <section id="screen-search" class="screen">
-      <input type="text" placeholder="Search verse..." class="search-box">
-      <p class="muted">Search coming soon 🔍</p>
+      <input class="search-box" placeholder="🔍 Search verse" />
+      <p class="muted">Search coming soon</p>
     </section>
 
   </main>
