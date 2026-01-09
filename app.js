@@ -5,6 +5,10 @@ const themeToggle = document.getElementById("themeToggle");
 
 const palette = document.getElementById("highlightPalette");
 const clearHighlightBtn = document.getElementById("clearHighlight");
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "light") {
+  document.body.classList.add("light");
+}
 
 // STATE
 let bible = {};
@@ -169,5 +173,7 @@ chapterSelect.onchange = () => {
 // THEME TOGGLE
 // =======================
 themeToggle.onclick = () => {
-  document.body.classList.toggle("light");
+  const isLight = document.body.classList.toggle("light");
+  localStorage.setItem("theme", isLight ? "light" : "dark");
 };
+
