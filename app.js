@@ -232,3 +232,7 @@ function searchBible(query) {
 searchInput.addEventListener("input", (e) => {
   searchBible(e.target.value);
 });
+function openSearch() {
+  searchScreen.classList.remove("hidden");
+  searchInput.focus();
+}
