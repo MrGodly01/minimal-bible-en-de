@@ -4,22 +4,37 @@
   <meta charset="UTF-8" />
   <title>Minimal Bible</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Nothing-style font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="dark">
 
-  <header>
-    <h1>Minimal Bible</h1>
-    <button id="themeToggle">◐</button>
-  </header>
+<header>
+  <h1>Minimal Bible</h1>
+  <button id="themeToggle">◐</button>
+</header>
 
-  <div class="controls">
-    <select id="book"></select>
-    <select id="chapter"></select>
-  </div>
+<div class="controls">
+  <select id="book"></select>
+  <select id="chapter"></select>
+</div>
 
-  <main id="verses"></main>
+<input id="search" placeholder="Search verse..." />
 
-  <script src="app.js"></script>
+<main id="verses"></main>
+
+<nav class="bottom-nav">
+  <button data-tab="bible">📖</button>
+  <button data-tab="favorites">❤️</button>
+  <button data-tab="notes">📝</button>
+</nav>
+
+<script src="app.js"></script>
 </body>
 </html>
