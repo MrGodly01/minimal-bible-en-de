@@ -1,74 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <head>
   <meta charset="UTF-8" />
   <title>Minimal Bible</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+
+<body class="dark">
 
   <!-- HEADER -->
-  <header class="top-bar">
+  <header>
     <h1>Minimal Bible</h1>
-
-    <!-- THEME TOGGLE -->
-   <button id="themeToggle">
-  <span class="material-symbols-outlined">dark_mode</span>
-</button>
-
+    <button id="themeToggle">🌙</button>
   </header>
 
-  <!-- APP -->
-  <main id="app">
+  <!-- CONTROLS -->
+  <div class="controls">
+    <select id="book"></select>
+    <select id="chapter"></select>
+  </div>
 
-    <!-- BIBLE -->
-    <section id="screen-bible" class="screen active">
-      <div class="controls">
-        <select id="book"></select>
-        <select id="chapter"></select>
-      </div>
-
-      <div id="verses" class="verses"></div>
-    </section>
-
-    <!-- NOTES -->
-    <section id="screen-notes" class="screen">
-      <h2>📝 Notes</h2>
-      <p class="muted">Notes coming soon</p>
-    </section>
-
-    <!-- SEARCH -->
-    <section id="screen-search" class="screen">
-      <input class="search-box" placeholder="🔍 Search verse" />
-      <p class="muted">Search coming soon</p>
-    </section>
-
-  </main>
+  <!-- VERSES -->
+  <main id="verses"></main>
 
   <!-- BOTTOM NAV -->
- <nav class="bottom-nav">
-  <button class="nav-item">
-    <span class="material-symbols-outlined">menu_book</span>
-    <span>Bible</span>
-  </button>
-
-  <button class="nav-item">
-    <span class="material-symbols-outlined">edit_note</span>
-    <span>Notes</span>
-  </button>
-
-  <button class="nav-item">
-    <span class="material-symbols-outlined">search</span>
-    <span>Search</span>
-  </button>
-</nav>
-
+  <nav class="bottom-nav">
+    <button class="active">📖<span>Bible</span></button>
+    <button>📝<span>Notes</span></button>
+    <button>🔍<span>Search</span></button>
+  </nav>
 
   <script src="app.js"></script>
 </body>
