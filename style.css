@@ -109,3 +109,12 @@ body.light .verse {
 .favorite {
   border-left: 4px solid var(--accent);
 }
+.verse-number {
+  color: #777;
+  font-size: 13px;
+  margin-right: 6px;
+}
+
+body.light .verse-number {
+  color: #555;
+}
