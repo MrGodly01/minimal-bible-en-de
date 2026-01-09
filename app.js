@@ -6,7 +6,6 @@ const themeToggle = document.getElementById("themeToggle");
 const palette = document.getElementById("highlightPalette");
 const clearHighlightBtn = document.getElementById("clearHighlight");
 
-// STATE
 let bible = {};
 let currentBook = "";
 let currentChapter = 1;
@@ -14,26 +13,17 @@ let currentChapter = 1;
 let activeVerseEl = null;
 let activeVerseId = null;
 
-// LOAD SAVED HIGHLIGHTS
 let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
 
-// =======================
 // LOAD BIBLE
-// =======================
 fetch("data/kjv.json")
   .then(res => res.json())
   .then(data => {
     bible = data.books;
     loadBooks();
-  })
-  .catch(err => {
-    versesEl.innerText = "Failed to load Bible";
-    console.error(err);
   });
 
-// =======================
 // LOAD BOOKS
-// =======================
 function loadBooks() {
   bookSelect.innerHTML = "";
   bible.forEach(book => {
@@ -46,9 +36,7 @@ function loadBooks() {
   loadChapters();
 }
 
-// =======================
 // LOAD CHAPTERS
-// =======================
 function loadChapters() {
   chapterSelect.innerHTML = "";
   const book = bible.find(b => b.name === currentBook);
@@ -64,9 +52,7 @@ function loadChapters() {
   loadVerses();
 }
 
-// =======================
 // LOAD VERSES
-// =======================
 function loadVerses() {
   versesEl.innerHTML = "";
 
@@ -74,36 +60,31 @@ function loadVerses() {
   const chapter = book.chapters.find(c => c.chapter == currentChapter);
 
   chapter.verses.forEach(v => {
-    const verseId = `${book.name}-${chapter.chapter}-${v.verse}`;
-
+    const id = `${book.name}-${chapter.chapter}-${v.verse}`;
     const div = document.createElement("div");
+
     div.className = "verse";
-    div.dataset.id = verseId;
+    div.dataset.id = id;
 
-    if (highlights[verseId]) {
-      div.classList.add(highlights[verseId]);
-    }
+    if (highlights[id]) div.classList.add(highlights[id]);
 
-    div.innerHTML = `
-      <span class="verse-num">${v.verse}</span> ${v.text}
-    `;
+    div.innerHTML = `<span class="verse-num">${v.verse}</span>${v.text}`;
 
-    // OPEN PALETTE ON TAP
-    div.onclick = () => {
+    div.addEventListener("click", (e) => {
+      e.stopPropagation();
       activeVerseEl = div;
-      activeVerseId = verseId;
+      activeVerseId = id;
       palette.classList.remove("hidden");
-    };
+    });
 
     versesEl.appendChild(div);
   });
 }
 
-// =======================
-// PALETTE COLOR PICK
-// =======================
+// COLOR PICK
 document.querySelectorAll(".palette-colors span").forEach(dot => {
-  dot.onclick = () => {
+  dot.addEventListener("click", (e) => {
+    e.stopPropagation();
     if (!activeVerseEl) return;
 
     const color = dot.dataset.color;
@@ -120,12 +101,10 @@ document.querySelectorAll(".palette-colors span").forEach(dot => {
 
     localStorage.setItem("highlights", JSON.stringify(highlights));
     palette.classList.add("hidden");
-  };
+  });
 });
 
-// =======================
-// CLEAR HIGHLIGHT
-// =======================
+// CLEAR
 clearHighlightBtn.onclick = () => {
   if (!activeVerseEl) return;
 
@@ -141,18 +120,12 @@ clearHighlightBtn.onclick = () => {
   palette.classList.add("hidden");
 };
 
-// =======================
-// CLOSE PALETTE ON OUTSIDE TAP
-// =======================
-document.addEventListener("click", (e) => {
-  if (!palette.contains(e.target) && !e.target.closest(".verse")) {
-    palette.classList.add("hidden");
-  }
+// CLOSE PALETTE
+document.addEventListener("click", () => {
+  palette.classList.add("hidden");
 });
 
-// =======================
 // EVENTS
-// =======================
 bookSelect.onchange = () => {
   currentBook = bookSelect.value;
   loadChapters();
@@ -163,9 +136,6 @@ chapterSelect.onchange = () => {
   loadVerses();
 };
 
-// =======================
-// THEME TOGGLE
-// =======================
 themeToggle.onclick = () => {
   document.body.classList.toggle("light");
 };
