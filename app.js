@@ -14,6 +14,7 @@ let currentChapter = 1;
 
 // LOAD HIGHLIGHTS
 let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
+let highlightHistory = JSON.parse(localStorage.getItem("highlightHistory")) || [];
 
 // LOAD BIBLE
 fetch("data/kjv.json")
@@ -79,16 +80,58 @@ function loadVerses() {
 
 // SINGLE TAP HIGHLIGHT
 function toggleHighlight(el, id) {
-  const colors = ["highlight-yellow", "highlight-blue", "highlight-green"];
+  const colors = ["highlight-yellow", "highlight-green", "highlight-blue"];
   const current = highlights[id];
   const next = colors[(colors.indexOf(current) + 1) % colors.length];
 
+  // remove old colors
   el.classList.remove(...colors);
+
+  // apply new color
   el.classList.add(next);
 
+  // save highlight
   highlights[id] = next;
+  highlightHistory.push(id);
+
   localStorage.setItem("highlights", JSON.stringify(highlights));
+  localStorage.setItem("highlightHistory", JSON.stringify(highlightHistory));
 }
+function undoHighlight() {
+  const lastId = highlightHistory.pop();
+  if (!lastId) return;
+
+  delete highlights[lastId];
+
+  document.querySelectorAll(".verse").forEach(v => {
+    if (v.dataset.id === lastId) {
+      v.classList.remove(
+        "highlight-yellow",
+        "highlight-green",
+        "highlight-blue"
+      );
+    }
+  });
+
+  localStorage.setItem("highlights", JSON.stringify(highlights));
+  localStorage.setItem("highlightHistory", JSON.stringify(highlightHistory));
+}
+function clearAllHighlights() {
+  highlights = {};
+  highlightHistory = [];
+
+  document.querySelectorAll(".verse").forEach(v => {
+    v.classList.remove(
+      "highlight-yellow",
+      "highlight-green",
+      "highlight-blue"
+    );
+  });
+
+  localStorage.removeItem("highlights");
+  localStorage.removeItem("highlightHistory");
+}
+
 
 // EVENTS
 bookSelect.onchange = () => {
