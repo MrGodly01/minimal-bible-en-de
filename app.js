@@ -1,73 +1,55 @@
-let currentBookData = {};
-
 const bookSelect = document.getElementById("book");
 const chapterSelect = document.getElementById("chapter");
 const verseSelect = document.getElementById("verse");
+
 const enText = document.getElementById("en");
 const deText = document.getElementById("de");
 
-/* ===== AVAILABLE BOOKS ===== */
-/* Add more later: "Genesis", "Matthew", etc */
-const BOOKS = ["John"];
+let bible = {};
 
-/* ===== INIT ===== */
-function init() {
-  bookSelect.innerHTML = BOOKS
-    .map(b => `<option value="${b}">${b}</option>`)
-    .join("");
-
-  loadBook(bookSelect.value);
+async function loadBook(book) {
+  const res = await fetch(`data/${book}.json`);
+  bible = await res.json();
+  populateChapters();
 }
 
-/* ===== LOAD BOOK FILE ===== */
-function loadBook(book) {
-  fetch(`data/${book}.json`)
-    .then(res => res.json())
-    .then(data => {
-      currentBookData = data;
-      loadChapters();
-    })
-    .catch(err => {
-      console.error("Failed to load book:", err);
-    });
+function populateBooks() {
+  bookSelect.innerHTML = `<option value="John">John</option>`;
+  loadBook("John");
 }
 
-/* ===== LOAD CHAPTERS ===== */
-function loadChapters() {
-  const chapters = Object.keys(currentBookData);
-
-  chapterSelect.innerHTML = chapters
-    .map(c => `<option value="${c}">${c}</option>`)
-    .join("");
-
-  loadVerses();
+function populateChapters() {
+  chapterSelect.innerHTML = "";
+  Object.keys(bible).forEach(ch => {
+    const opt = document.createElement("option");
+    opt.value = ch;
+    opt.textContent = ch;
+    chapterSelect.appendChild(opt);
+  });
+  populateVerses();
 }
 
-/* ===== LOAD VERSES ===== */
-function loadVerses() {
+function populateVerses() {
+  verseSelect.innerHTML = "";
   const chapter = chapterSelect.value;
-  const verses = Object.keys(currentBookData[chapter]);
-
-  verseSelect.innerHTML = verses
-    .map(v => `<option value="${v}">${v}</option>`)
-    .join("");
-
+  Object.keys(bible[chapter]).forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    verseSelect.appendChild(opt);
+  });
   showVerse();
 }
 
-/* ===== SHOW VERSE ===== */
 function showVerse() {
-  const chapter = chapterSelect.value;
-  const verse = verseSelect.value;
-
-  enText.textContent = currentBookData[chapter][verse].en;
-  deText.textContent = currentBookData[chapter][verse].de;
+  const c = chapterSelect.value;
+  const v = verseSelect.value;
+  enText.textContent = bible[c][v].en;
+  deText.textContent = bible[c][v].de;
 }
 
-/* ===== EVENTS ===== */
-bookSelect.addEventListener("change", () => loadBook(bookSelect.value));
-chapterSelect.addEventListener("change", loadVerses);
-verseSelect.addEventListener("change", showVerse);
+bookSelect.onchange = () => loadBook(bookSelect.value);
+chapterSelect.onchange = populateVerses;
+verseSelect.onchange = showVerse;
 
-/* ===== START APP ===== */
-init();
+populateBooks();
