@@ -3,27 +3,27 @@ const chapterSelect = document.getElementById("chapter");
 const verseSelect = document.getElementById("verse");
 const englishText = document.getElementById("englishText");
 
-let bible = {};
+let bibleData = [];
 
-// Load KJV Bible
+// Load Bible
 fetch("data/kjv.json")
   .then(res => res.json())
   .then(data => {
-    bible = data;
+    bibleData = data.books;
     loadBooks();
   })
   .catch(err => {
-    englishText.textContent = "Failed to load Bible data.";
+    englishText.textContent = "Failed to load Bible";
     console.error(err);
   });
 
 // Load books
 function loadBooks() {
   bookSelect.innerHTML = "";
-  Object.keys(bible).forEach(book => {
+  bibleData.forEach((book, index) => {
     const opt = document.createElement("option");
-    opt.value = book;
-    opt.textContent = book;
+    opt.value = index;
+    opt.textContent = book.name;
     bookSelect.appendChild(opt);
   });
   loadChapters();
@@ -31,12 +31,12 @@ function loadBooks() {
 
 // Load chapters
 function loadChapters() {
-  const book = bookSelect.value;
+  const book = bibleData[bookSelect.value];
   chapterSelect.innerHTML = "";
-  Object.keys(bible[book]).forEach(chapter => {
+  book.chapters.forEach((ch, index) => {
     const opt = document.createElement("option");
-    opt.value = chapter;
-    opt.textContent = chapter;
+    opt.value = index;
+    opt.textContent = ch.chapter;
     chapterSelect.appendChild(opt);
   });
   loadVerses();
@@ -44,27 +44,26 @@ function loadChapters() {
 
 // Load verses
 function loadVerses() {
-  const book = bookSelect.value;
-  const chapter = chapterSelect.value;
+  const chapter =
+    bibleData[bookSelect.value].chapters[chapterSelect.value];
   verseSelect.innerHTML = "";
-
-  Object.keys(bible[book][chapter]).forEach(verse => {
+  chapter.verses.forEach((v, index) => {
     const opt = document.createElement("option");
-    opt.value = verse;
-    opt.textContent = verse;
+    opt.value = index;
+    opt.textContent = v.verse;
     verseSelect.appendChild(opt);
   });
-
   showVerse();
 }
 
-// Show verse text
+// Show verse
 function showVerse() {
-  const book = bookSelect.value;
-  const chapter = chapterSelect.value;
-  const verse = verseSelect.value;
+  const verse =
+    bibleData[bookSelect.value]
+      .chapters[chapterSelect.value]
+      .verses[verseSelect.value];
 
-  englishText.textContent = bible[book][chapter][verse];
+  englishText.textContent = verse.text;
 }
 
 // Events
