@@ -102,6 +102,29 @@ function toggleHighlight(el, id) {
     "highlight-pink"
   ];
 
+  let current = highlights[id];
+  let index = colors.indexOf(current);
+
+  // remove all colors first
+  colors.forEach(c => el.classList.remove(c));
+
+  if (index === -1) {
+    // first tap
+    el.classList.add(colors[0]);
+    highlights[id] = colors[0];
+  } else if (index === colors.length - 1) {
+    // last tap = remove highlight
+    delete highlights[id];
+  } else {
+    // next color
+    el.classList.add(colors[index + 1]);
+    highlights[id] = colors[index + 1];
+  }
+
+  localStorage.setItem("highlights", JSON.stringify(highlights));
+}
+
+
   // If already highlighted → remove
   if (highlights[id]) {
     el.classList.remove(highlights[id]);
