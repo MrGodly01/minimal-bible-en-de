@@ -1,13 +1,14 @@
-const bookSelect = document.getElementById("book");
-const chapterSelect = document.getElementById("chapter");
-const verseSelect = document.getElementById("verse");
-const enText = document.getElementById("en");
-
 let bible = {};
+let bookSelect = document.getElementById("book");
+let chapterSelect = document.getElementById("chapter");
+let verseSelect = document.getElementById("verse");
 
-// Load the full English Bible
+let englishBox = document.getElementById("englishText");
+let germanBox = document.getElementById("germanText");
+
+// Load KJV Bible
 fetch("data/kjv.json")
-  .then(response => response.json())
+  .then(res => res.json())
   .then(data => {
     bible = data;
     loadBooks();
@@ -16,44 +17,48 @@ fetch("data/kjv.json")
 function loadBooks() {
   bookSelect.innerHTML = "";
   Object.keys(bible).forEach(book => {
-    const option = document.createElement("option");
-    option.value = book;
-    option.textContent = book;
-    bookSelect.appendChild(option);
+    let opt = document.createElement("option");
+    opt.value = book;
+    opt.textContent = book;
+    bookSelect.appendChild(opt);
   });
   loadChapters();
 }
 
 function loadChapters() {
-  const book = bookSelect.value;
   chapterSelect.innerHTML = "";
-  Object.keys(bible[book]).forEach(chapter => {
-    const option = document.createElement("option");
-    option.value = chapter;
-    option.textContent = chapter;
-    chapterSelect.appendChild(option);
+  verseSelect.innerHTML = "";
+  let book = bookSelect.value;
+  Object.keys(bible[book]).forEach(ch => {
+    let opt = document.createElement("option");
+    opt.value = ch;
+    opt.textContent = ch;
+    chapterSelect.appendChild(opt);
   });
   loadVerses();
 }
 
 function loadVerses() {
-  const book = bookSelect.value;
-  const chapter = chapterSelect.value;
   verseSelect.innerHTML = "";
-  Object.keys(bible[book][chapter]).forEach(verse => {
-    const option = document.createElement("option");
-    option.value = verse;
-    option.textContent = verse;
-    verseSelect.appendChild(option);
+  let book = bookSelect.value;
+  let chapter = chapterSelect.value;
+  Object.keys(bible[book][chapter]).forEach(v => {
+    let opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    verseSelect.appendChild(opt);
   });
   showVerse();
 }
 
 function showVerse() {
-  const book = bookSelect.value;
-  const chapter = chapterSelect.value;
-  const verse = verseSelect.value;
-  enText.textContent = bible[book][chapter][verse];
+  let book = bookSelect.value;
+  let chapter = chapterSelect.value;
+  let verse = verseSelect.value;
+
+  let text = bible[book][chapter][verse];
+  englishBox.textContent = text;
+  germanBox.textContent = "—";
 }
 
 bookSelect.addEventListener("change", loadChapters);
