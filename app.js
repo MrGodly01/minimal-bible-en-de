@@ -13,7 +13,7 @@ fetch("data/kjv.json")
     loadBooks();
   })
   .catch(err => {
-    englishText.textContent = "Failed to load Bible data";
+    englishText.textContent = "Failed to load Bible data.";
     console.error(err);
   });
 
@@ -33,10 +33,10 @@ function loadBooks() {
 function loadChapters() {
   const book = bookSelect.value;
   chapterSelect.innerHTML = "";
-  Object.keys(bible[book]).forEach(ch => {
+  Object.keys(bible[book]).forEach(chapter => {
     const opt = document.createElement("option");
-    opt.value = ch;
-    opt.textContent = ch;
+    opt.value = chapter;
+    opt.textContent = chapter;
     chapterSelect.appendChild(opt);
   });
   loadVerses();
@@ -46,4 +46,28 @@ function loadChapters() {
 function loadVerses() {
   const book = bookSelect.value;
   const chapter = chapterSelect.value;
-  verse
+  verseSelect.innerHTML = "";
+
+  Object.keys(bible[book][chapter]).forEach(verse => {
+    const opt = document.createElement("option");
+    opt.value = verse;
+    opt.textContent = verse;
+    verseSelect.appendChild(opt);
+  });
+
+  showVerse();
+}
+
+// Show verse text
+function showVerse() {
+  const book = bookSelect.value;
+  const chapter = chapterSelect.value;
+  const verse = verseSelect.value;
+
+  englishText.textContent = bible[book][chapter][verse];
+}
+
+// Events
+bookSelect.addEventListener("change", loadChapters);
+chapterSelect.addEventListener("change", loadVerses);
+verseSelect.addEventListener("change", showVerse);
