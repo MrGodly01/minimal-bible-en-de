@@ -6,28 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body class="dark">
 
-<header>
-  <h1>Minimal Bible</h1>
+  <header>
+    <h1>Minimal Bible</h1>
+    <button id="themeToggle">◐</button>
+  </header>
 
-  <button id="themeToggle" aria-label="Toggle theme">
-    ☀︎
-  </button>
-</header>
-
-<div class="controls">
-  <select id="book"></select>
-  <select id="chapter"></select>
-</div>
-
-<div class="reader">
-  <div id="englishText" class="verses">
-    Loading…
+  <div class="controls">
+    <select id="book"></select>
+    <select id="chapter"></select>
   </div>
-</div>
 
-<script src="app.js"></script>
+  <main id="verses"></main>
+
+  <script src="app.js"></script>
 </body>
 </html>
