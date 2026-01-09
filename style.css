@@ -63,12 +63,19 @@ main {
 }
 
 .verse {
-  padding: 14px;
-  margin-bottom: 14px;
-  border-radius: 14px;
-  background: var(--card);
-  line-height: 1.7;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  color: #eaeaea;   /* 🔥 THIS WAS MISSING */
+  line-height: 1.8;
+  font-size: 16px;
 }
+body.light .verse {
+  color: #111;
+  background: rgba(0,0,0,0.04);
+}
+
 
 .verse-number {
   color: var(--muted);
