@@ -118,3 +118,8 @@ body.light .verse {
 body.light .verse-number {
   color: #555;
 }
+main {
+  max-width: 680px;
+  margin: auto;
+  padding: 16px;
+}
