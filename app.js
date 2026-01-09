@@ -147,3 +147,28 @@ navItems.forEach(btn => {
     });
   });
 });
+// THEME TOGGLE
+const toggle = document.getElementById("themeToggle");
+
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("light");
+
+  toggle.textContent =
+    document.body.classList.contains("light") ? "🌞" : "🌙";
+});
+
+// BOTTOM NAV
+const navItems = document.querySelectorAll(".nav-item");
+const screens = document.querySelectorAll(".screen");
+
+navItems.forEach(btn => {
+  btn.addEventListener("click", () => {
+    navItems.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    screens.forEach(screen => screen.classList.remove("active"));
+    document
+      .getElementById("screen-" + btn.dataset.target)
+      .classList.add("active");
+  });
+});
