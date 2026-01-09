@@ -146,8 +146,10 @@ clearHighlightBtn.onclick = (e) => {
 // =======================
 // CLOSE PALETTE
 // =======================
-document.addEventListener("click", () => {
-  palette.classList.add("hidden");
+document.addEventListener("click", (e) => {
+  if (!palette.contains(e.target) && !e.target.closest(".verse")) {
+    palette.classList.add("hidden");
+  }
 });
 
 // =======================
