@@ -4,30 +4,36 @@
   <meta charset="UTF-8" />
   <title>Minimal Bible</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <h1>Minimal Bible</h1>
 
+  <!-- Controls -->
   <div class="controls">
     <select id="book"></select>
     <select id="chapter"></select>
     <select id="verse"></select>
   </div>
 
+  <!-- Bible Columns -->
   <div class="bible">
     <div class="column">
       <h2>English</h2>
-      <p id="englishText"></p>
+      <p id="englishText">Loading...</p>
     </div>
 
     <div class="column">
       <h2>German</h2>
-      <p id="germanText">(German coming soon)</p>
+      <p id="germanText">German coming soon</p>
     </div>
   </div>
 
+  <!-- JS (MUST BE LAST) -->
   <script src="app.js"></script>
+
 </body>
 </html>
