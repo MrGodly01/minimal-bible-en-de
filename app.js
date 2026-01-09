@@ -2,6 +2,11 @@ const bookSelect = document.getElementById("book");
 const chapterSelect = document.getElementById("chapter");
 const versesEl = document.getElementById("verses");
 const themeToggle = document.getElementById("themeToggle");
+const palette = document.getElementById("highlightPalette");
+const clearHighlightBtn = document.getElementById("clearHighlight");
+
+let activeVerseEl = null;
+let activeVerseId = null;
 
 let bible = {};
 let currentBook = "";
@@ -62,7 +67,11 @@ function loadVerses() {
     }
 
     div.innerHTML = `<span class="verse-num">${v.verse}</span> ${v.text}`;
-    div.onclick = () => toggleHighlight(div, id);
+    div.onclick = () => {
+  activeVerseEl = div;
+  activeVerseId = verseId;
+  palette.classList.remove("hidden");
+};
 
     versesEl.appendChild(div);
   });
@@ -95,3 +104,42 @@ chapterSelect.onchange = () => {
 themeToggle.onclick = () => {
   document.body.classList.toggle("light");
 };
+document.querySelectorAll(".palette-colors span").forEach(dot => {
+  dot.onclick = () => {
+    if (!activeVerseEl) return;
+
+    const color = dot.dataset.color;
+
+    activeVerseEl.classList.remove(
+      "highlight-yellow",
+      "highlight-green",
+      "highlight-blue",
+      "highlight-pink"
+    );
+
+    activeVerseEl.classList.add(color);
+    highlights[activeVerseId] = color;
+
+    localStorage.setItem("highlights", JSON.stringify(highlights));
+    palette.classList.add("hidden");
+  };
+});
+clearHighlightBtn.onclick = () => {
+  if (!activeVerseEl) return;
+
+  activeVerseEl.classList.remove(
+    "highlight-yellow",
+    "highlight-green",
+    "highlight-blue",
+    "highlight-pink"
+  );
+
+  delete highlights[activeVerseId];
+  localStorage.setItem("highlights", JSON.stringify(highlights));
+  palette.classList.add("hidden");
+};
+document.addEventListener("click", (e) => {
+  if (!palette.contains(e.target) && !e.target.classList.contains("verse")) {
+    palette.classList.add("hidden");
+  }
+});
