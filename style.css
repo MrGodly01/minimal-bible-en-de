@@ -1,8 +1,10 @@
 :root {
   --bg: #000;
-  --text: #eaeaea;
-  --card: rgba(255,255,255,0.04);
-  --accent: #00e5ff;
+  --text: #e6e6e6;
+  --muted: #777;
+  --highlight-blue: rgba(0, 200, 220, 0.35);
+  --highlight-green: rgba(0, 220, 150, 0.35);
+  --highlight-yellow: rgba(255, 210, 0, 0.35);
 }
 
 body {
@@ -12,69 +14,76 @@ body {
   font-family: 'Inter', system-ui;
 }
 
-body.light {
-  --bg: #fff;
-  --text: #111;
-  --card: rgba(0,0,0,0.05);
-}
-
 header {
   display: flex;
   justify-content: space-between;
   padding: 16px;
 }
 
+.icons button {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 18px;
+  margin-left: 10px;
+}
+
 .controls {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   padding: 0 16px;
 }
 
-select, input {
+select {
   background: transparent;
   color: var(--text);
   border: 1px solid #444;
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 14px;
+  padding: 10px 14px;
 }
 
-#verses {
+#searchBar {
+  padding: 0 16px;
+}
+
+#searchBar input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #444;
+  color: var(--text);
+  font-size: 16px;
+  padding: 8px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+main {
   padding: 16px;
-  padding-bottom: 90px;
+  max-width: 700px;
+  margin: auto;
 }
 
 .verse {
-  background: var(--card);
-  padding: 16px;
-  border-radius: 16px;
-  margin-bottom: 14px;
-  line-height: 1.8;
-  cursor: pointer;
+  margin-bottom: 18px;
+  line-height: 1.9;
+  font-size: 17px;
 }
 
 .verse-number {
-  opacity: 0.5;
+  color: var(--muted);
   font-size: 13px;
   margin-right: 6px;
 }
 
-.highlight-blue { background: rgba(0,229,255,0.25); }
-.highlight-green { background: rgba(0,255,128,0.25); }
-.highlight-yellow { background: rgba(255,214,0,0.25); }
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #000;
-  display: flex;
-  justify-content: space-around;
-  padding: 12px 0;
+.verse-text {
+  padding: 6px 8px;
+  border-radius: 10px;
+  display: inline;
 }
 
-.bottom-nav button {
-  background: none;
-  color: var(--text);
-  font-size: 20px;
-  border: none;
-}
+.blue { background: var(--highlight-blue); }
+.green { background: var(--highlight-green); }
+.yellow { background: var(--highlight-yellow); }
