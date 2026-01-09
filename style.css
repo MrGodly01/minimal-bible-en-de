@@ -4,6 +4,11 @@ body {
   color: #fff;
   margin: 0;
   padding-bottom: 80px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+body.light {
+  background: #f5f5f5;
+  color: #111;
 }
 
 header {
@@ -126,5 +131,19 @@ select {
 @keyframes highlightFade {
   from {
     background-color: transparent;
+    body.light .verse {
+  background: #ffffff;
+}
+
+body.light .palette {
+  background: #ffffff;
+  color: #000;
+}
+
+body.light select {
+  background: #ffffff;
+  color: #000;
+}
+
   }
 }
