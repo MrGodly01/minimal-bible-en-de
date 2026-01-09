@@ -2,6 +2,7 @@ const bookSelect = document.getElementById("book");
 const chapterSelect = document.getElementById("chapter");
 const versesEl = document.getElementById("verses");
 const themeToggle = document.getElementById("themeToggle");
+const openSearchBtn = document.getElementById("openSearch");
 
 const palette = document.getElementById("highlightPalette");
 const clearHighlightBtn = document.getElementById("clearHighlight");
@@ -236,3 +237,7 @@ function openSearch() {
   searchScreen.classList.remove("hidden");
   searchInput.focus();
 }
+openSearchBtn.onclick = () => {
+  searchScreen.classList.remove("hidden");
+  searchInput.focus();
+};
