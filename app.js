@@ -191,3 +191,30 @@ function undoHighlight() {
     JSON.stringify(highlightHistory)
   );
 }
+
+const noteEditor = document.getElementById("noteEditor");
+const noteText = document.getElementById("noteText");
+const saveNoteBtn = document.getElementById("saveNote");
+
+let currentNoteVerseId = null;
+
+function openNoteEditor(id) {
+  currentNoteVerseId = id;
+  noteText.value = notes[id] || "";
+  noteEditor.classList.remove("hidden");
+}
+
+saveNoteBtn.onclick = () => {
+  if (!currentNoteVerseId) return;
+
+  notes[currentNoteVerseId] = noteText.value;
+  localStorage.setItem("notes", JSON.stringify(notes));
+  noteEditor.classList.add("hidden");
+};
+
+// Close editor when tapping outside
+noteEditor.onclick = (e) => {
+  if (e.target === noteEditor) {
+    noteEditor.classList.add("hidden");
+  }
+};
