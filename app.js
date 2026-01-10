@@ -9,6 +9,7 @@ let activeVerseId = null;
 
 // load saved highlights
 let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
+let notes = JSON.parse(localStorage.getItem("notes")) || {};
 let highlightHistory =
   JSON.parse(localStorage.getItem("highlightHistory")) || [];
 
@@ -71,9 +72,14 @@ function loadVerses() {
 if (highlights[id]) {
   div.classList.add(highlights[id]);
 }
+    
+div.innerHTML = `
+  <span class="verse-num">${v.verse}</span>
+  <span class="verse-text">${v.text}</span>
+  <button class="note-btn">📝</button>
+`;
 
-    div.innerHTML = `<span class="verse-num">${v.verse}</span> ${v.text}`;
-
+  
     div.onclick = (e) => {
       e.stopPropagation();
       activeVerseEl = div;
