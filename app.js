@@ -54,10 +54,23 @@ function loadVerses() {
   chapter.verses.forEach(v => {
     const div = document.createElement("div");
     div.className = "verse";
+
+    const id = `${book.name}-${chapter.chapter}-${v.verse}`;
+    div.dataset.id = id;
+
     div.innerHTML = `<span class="verse-num">${v.verse}</span> ${v.text}`;
+
+    div.onclick = (e) => {
+      e.stopPropagation();
+      activeVerseEl = div;
+      activeVerseId = id;
+      palette.classList.remove("hidden");
+    };
+
     versesEl.appendChild(div);
   });
 }
+
 
 // EVENTS
 bookSelect.onchange = loadChapters;
