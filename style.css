@@ -360,3 +360,17 @@ body.light .note-sheet {
     transform: translateY(100%);
   }
 }
+
+/* NOTE INDICATOR */
+.verse.has-note {
+  position: relative;
+}
+
+.verse.has-note::after {
+  content: "•";
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  font-size: 22px;
+  color: var(--accent);
+}
