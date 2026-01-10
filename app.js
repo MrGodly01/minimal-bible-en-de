@@ -62,3 +62,21 @@ function loadVerses() {
 // EVENTS
 bookSelect.onchange = loadChapters;
 chapterSelect.onchange = loadVerses;
+// THEME TOGGLE
+const themeToggle = document.getElementById("themeToggle");
+
+themeToggle.onclick = () => {
+  document.body.classList.toggle("light");
+  const isLight = document.body.classList.contains("light");
+  themeToggle.textContent = isLight ? "☀️" : "🌙";
+  localStorage.setItem("theme", isLight ? "light" : "dark");
+};
+
+// Load saved theme
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("theme");
+  if (saved === "light") {
+    document.body.classList.add("light");
+    themeToggle.textContent = "☀️";
+  }
+});
