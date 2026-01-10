@@ -374,3 +374,15 @@ body.light .note-sheet {
   font-size: 22px;
   color: var(--accent);
 }
+
+.note-sheet textarea {
+  transition: background 0.2s ease;
+}
+
+.note-sheet textarea:focus {
+  background: rgba(255,255,255,0.04);
+}
+
+body.light .note-sheet textarea:focus {
+  background: #f3f3f3;
+}
