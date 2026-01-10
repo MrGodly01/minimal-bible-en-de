@@ -251,6 +251,8 @@ const navTheme = document.getElementById("navTheme");
 const navNotes = document.getElementById("navNotes");
 
 const searchScreen = document.getElementById("searchScreen");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
 
 // Active state helper
 function setActive(btn) {
@@ -283,9 +285,6 @@ navNotes.onclick = () => {
 };
 
 // SEARCH
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
-
 searchInput.oninput = () => {
   const q = searchInput.value.toLowerCase();
   searchResults.innerHTML = "";
@@ -304,61 +303,35 @@ searchInput.oninput = () => {
             <div class="search-ref">${book.name} ${ch.chapter}:${v.verse}</div>
           `;
 
-          // 🔥 THIS IS THE MAGIC
-        div.onclick = () => {
-  // Switch book
-  bookSelect.value = book.name;
-  currentBook = book.name;
-  loadChapters();
-
-  // Switch chapter AFTER chapters load
-  setTimeout(() => {
-    chapterSelect.value = ch.chapter;
-    currentChapter = ch.chapter;
-    loadVerses();
-
-    // Scroll to verse AFTER verses load
-    setTimeout(() => {
-      const verseId = `${book.name}-${ch.chapter}-${v.verse}`;
-      const verseEl = document.querySelector(`[data-id="${verseId}"]`);
-
-      if (verseEl) {
-        verseEl.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-        verseEl.classList.add("pulse");
-      }
-    }, 200);
-  }, 200);
-
-  // Close search
-  document.getElementById("searchScreen").classList.add("hidden");
-};
-
-            // set book
+          div.onclick = () => {
+            // Switch book
             bookSelect.value = book.name;
-            currentBook = book.name;
             loadChapters();
 
-            // set chapter
-            chapterSelect.value = ch.chapter;
-            currentChapter = ch.chapter;
-            loadVerses();
-
-            // scroll to verse
+            // Switch chapter AFTER chapters load
             setTimeout(() => {
-              const verseEl = document.querySelector(
-                `[data-id="${book.name}-${ch.chapter}-${v.verse}"]`
-              );
-              if (verseEl) {
-                verseEl.scrollIntoView({ behavior: "smooth", block: "center" });
-                verseEl.classList.add("pulse");
-              }
-            }, 300);
+              chapterSelect.value = ch.chapter;
+              loadVerses();
 
-            // close search
-            document.getElementById("searchScreen").classList.add("hidden");
+              // Scroll to verse AFTER verses load
+              setTimeout(() => {
+                const verseId = `${book.name}-${ch.chapter}-${v.verse}`;
+                const verseEl = document.querySelector(
+                  `[data-id="${verseId}"]`
+                );
+
+                if (verseEl) {
+                  verseEl.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                  });
+                  verseEl.classList.add("pulse");
+                }
+              }, 200);
+            }, 200);
+
+            // Close search
+            searchScreen.classList.add("hidden");
           };
 
           searchResults.appendChild(div);
