@@ -73,6 +73,10 @@ function loadVerses() {
       div.classList.add(highlights[id]);
     }
 
+    if (notes[id]) {
+  div.classList.add("has-note");
+}
+
     div.innerHTML = `
       <span class="verse-num">${v.verse}</span>
       <span class="verse-text">${v.text}</span>
