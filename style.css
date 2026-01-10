@@ -300,3 +300,8 @@ header button:hover {
 .palette-colors span[data-color="highlight-green"]  { background:#4caf50; }
 .palette-colors span[data-color="highlight-blue"]   { background:#2196f3; }
 .palette-colors span[data-color="highlight-pink"]   { background:#e91e63; }
+
+header button:active {
+  transform: scale(0.9);
+}
+
