@@ -386,3 +386,52 @@ body.light .note-sheet {
 body.light .note-sheet textarea:focus {
   background: #f3f3f3;
 }
+
+/* PIXEL BOTTOM BAR */
+.pixel-bar {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30,30,30,0.75);
+  backdrop-filter: blur(12px);
+  display: flex;
+  gap: 18px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.pixel-btn {
+  background: transparent;
+  border: none;
+  color: #bbb;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.pixel-btn.active {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+.pixel-btn:hover {
+  transform: scale(1.15);
+}
+
+/* LIGHT MODE SUPPORT */
+body.light .pixel-bar {
+  background: rgba(240,240,240,0.85);
+}
+
+body.light .pixel-btn {
+  color: #333;
+}
+
+body.light .pixel-btn.active {
+  background: rgba(0,0,0,0.1);
+}
