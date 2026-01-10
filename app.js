@@ -281,3 +281,59 @@ navNotes.onclick = () => {
   alert("Notes coming soon ✍️");
   setActive(navNotes);
 };
+
+// SEARCH
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+
+searchInput.oninput = () => {
+  const q = searchInput.value.toLowerCase();
+  searchResults.innerHTML = "";
+
+  if (q.length < 2) return;
+
+  bible.forEach(book => {
+    book.chapters.forEach(ch => {
+      ch.verses.forEach(v => {
+        if (v.text.toLowerCase().includes(q)) {
+          const div = document.createElement("div");
+          div.className = "search-result";
+
+          div.innerHTML = `
+            <div>${v.text.slice(0, 90)}...</div>
+            <div class="search-ref">${book.name} ${ch.chapter}:${v.verse}</div>
+          `;
+
+          // 🔥 THIS IS THE MAGIC
+          div.onclick = () => {
+            // set book
+            bookSelect.value = book.name;
+            currentBook = book.name;
+            loadChapters();
+
+            // set chapter
+            chapterSelect.value = ch.chapter;
+            currentChapter = ch.chapter;
+            loadVerses();
+
+            // scroll to verse
+            setTimeout(() => {
+              const verseEl = document.querySelector(
+                `[data-id="${book.name}-${ch.chapter}-${v.verse}"]`
+              );
+              if (verseEl) {
+                verseEl.scrollIntoView({ behavior: "smooth", block: "center" });
+                verseEl.classList.add("pulse");
+              }
+            }, 300);
+
+            // close search
+            document.getElementById("searchScreen").classList.add("hidden");
+          };
+
+          searchResults.appendChild(div);
+        }
+      });
+    });
+  });
+};
