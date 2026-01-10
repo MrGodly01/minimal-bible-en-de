@@ -236,3 +236,67 @@ header button {
 header button:hover {
   transform: scale(1.05);
 }
+/* =========================
+   VERSE STYLING
+========================= */
+.verse {
+  padding: 14px 16px;
+  margin: 10px 0;
+  border-radius: 14px;
+  line-height: 1.6;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.verse:active {
+  transform: scale(0.98);
+}
+
+.verse-num {
+  opacity: 0.5;
+  margin-right: 6px;
+}
+
+/* =========================
+   HIGHLIGHT COLORS
+========================= */
+.highlight-yellow { background: #3a3314; }
+.highlight-green  { background: #143a2a; }
+.highlight-blue   { background: #142a3a; }
+.highlight-pink   { background: #3a1430; }
+
+/* =========================
+   PALETTE (PIXEL STYLE)
+========================= */
+.palette {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  background: #1e1e1e;
+  padding: 14px;
+  border-radius: 18px;
+  display: flex;
+  gap: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  transition: 0.25s ease;
+  z-index: 999;
+}
+
+.palette.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) scale(0.85);
+}
+
+.palette-colors span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.palette-colors span[data-color="highlight-yellow"] { background:#c9b458; }
+.palette-colors span[data-color="highlight-green"]  { background:#4caf50; }
+.palette-colors span[data-color="highlight-blue"]   { background:#2196f3; }
+.palette-colors span[data-color="highlight-pink"]   { background:#e91e63; }
