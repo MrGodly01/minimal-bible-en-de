@@ -1,6 +1,14 @@
 const bookSelect = document.getElementById("book");
 const chapterSelect = document.getElementById("chapter");
 const versesEl = document.getElementById("verses");
+const palette = document.getElementById("highlightPalette");
+const clearHighlightBtn = document.getElementById("clearHighlight");
+
+let activeVerseEl = null;
+let activeVerseId = null;
+
+// load saved highlights
+let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
 
 let bible = [];
 
