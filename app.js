@@ -243,3 +243,41 @@ noteEditor.onclick = (e) => {
     noteEditor.classList.add("hidden");
   }
 };
+
+// PIXEL NAV BAR LOGIC
+const navHome = document.getElementById("navHome");
+const navSearch = document.getElementById("navSearch");
+const navTheme = document.getElementById("navTheme");
+const navNotes = document.getElementById("navNotes");
+
+const searchScreen = document.getElementById("searchScreen");
+
+// Active state helper
+function setActive(btn) {
+  document.querySelectorAll(".pixel-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+// HOME
+navHome.onclick = () => {
+  if (searchScreen) searchScreen.classList.add("hidden");
+  setActive(navHome);
+};
+
+// SEARCH
+navSearch.onclick = () => {
+  if (searchScreen) searchScreen.classList.remove("hidden");
+  setActive(navSearch);
+};
+
+// THEME (reuses your existing theme toggle)
+navTheme.onclick = () => {
+  document.body.classList.toggle("light");
+  setActive(navTheme);
+};
+
+// NOTES (placeholder for now)
+navNotes.onclick = () => {
+  alert("Notes coming soon ✍️");
+  setActive(navNotes);
+};
