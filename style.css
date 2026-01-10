@@ -206,3 +206,33 @@ body.light .search-item {
     background: rgba(26,115,232,0.25);
   }
 }
+body.light {
+  background: #f9f9f9;
+  color: #111;
+}
+
+body.light select,
+body.light header button {
+  background: #fff;
+  color: #111;
+  border-color: #ccc;
+}
+
+body.light .verse {
+  background: #fff;
+  color: #000;
+}
+
+header button {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+header button:hover {
+  transform: scale(1.05);
+}
