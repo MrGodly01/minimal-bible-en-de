@@ -435,3 +435,37 @@ body.light .pixel-btn {
 body.light .pixel-btn.active {
   background: rgba(0,0,0,0.1);
 }
+
+.search-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg, #000);
+  padding: 20px;
+  z-index: 2000;
+}
+
+.search-screen input {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  margin-bottom: 16px;
+}
+
+.search-result {
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.search-result:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.search-ref {
+  font-size: 13px;
+  opacity: 0.6;
+}
