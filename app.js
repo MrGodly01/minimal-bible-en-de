@@ -9,6 +9,8 @@ let activeVerseId = null;
 
 // load saved highlights
 let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
+let highlightHistory =
+  JSON.parse(localStorage.getItem("highlightHistory")) || [];
 
 let bible = [];
 
@@ -122,10 +124,17 @@ document.querySelectorAll(".palette-colors span").forEach(dot => {
     );
 
     activeVerseEl.classList.add(color);
-    highlights[activeVerseId] = color;
+  highlights[activeVerseId] = color;
+highlightHistory.push(activeVerseId);
 
-    localStorage.setItem("highlights", JSON.stringify(highlights));
-    palette.classList.add("hidden");
+localStorage.setItem("highlights", JSON.stringify(highlights));
+localStorage.setItem(
+  "highlightHistory",
+  JSON.stringify(highlightHistory)
+);
+
+palette.classList.add("hidden");
+
   };
 });
 
@@ -152,3 +161,27 @@ document.addEventListener("click", (e) => {
     palette.classList.add("hidden");
   }
 });
+
+function undoHighlight() {
+  const lastId = highlightHistory.pop();
+  if (!lastId) return;
+
+  delete highlights[lastId];
+
+  document.querySelectorAll(".verse").forEach(v => {
+    if (v.dataset.id === lastId) {
+      v.classList.remove(
+        "highlight-yellow",
+        "highlight-green",
+        "highlight-blue",
+        "highlight-pink"
+      );
+    }
+  });
+
+  localStorage.setItem("highlights", JSON.stringify(highlights));
+  localStorage.setItem(
+    "highlightHistory",
+    JSON.stringify(highlightHistory)
+  );
+}
