@@ -305,7 +305,37 @@ searchInput.oninput = () => {
           `;
 
           // 🔥 THIS IS THE MAGIC
-          div.onclick = () => {
+        div.onclick = () => {
+  // Switch book
+  bookSelect.value = book.name;
+  currentBook = book.name;
+  loadChapters();
+
+  // Switch chapter AFTER chapters load
+  setTimeout(() => {
+    chapterSelect.value = ch.chapter;
+    currentChapter = ch.chapter;
+    loadVerses();
+
+    // Scroll to verse AFTER verses load
+    setTimeout(() => {
+      const verseId = `${book.name}-${ch.chapter}-${v.verse}`;
+      const verseEl = document.querySelector(`[data-id="${verseId}"]`);
+
+      if (verseEl) {
+        verseEl.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+        verseEl.classList.add("pulse");
+      }
+    }, 200);
+  }, 200);
+
+  // Close search
+  document.getElementById("searchScreen").classList.add("hidden");
+};
+
             // set book
             bookSelect.value = book.name;
             currentBook = book.name;
