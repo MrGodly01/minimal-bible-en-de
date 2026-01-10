@@ -224,8 +224,11 @@ saveNoteBtn.onclick = () => {
 
   notes[currentNoteVerseId] = noteText.value;
   localStorage.setItem("notes", JSON.stringify(notes));
+
+  loadVerses(); // refresh note indicator
   noteEditor.classList.add("hidden");
 };
+
 
 // Close editor when tapping outside
 noteEditor.onclick = (e) => {
