@@ -65,6 +65,10 @@ function loadVerses() {
 
     const id = `${book.name}-${chapter.chapter}-${v.verse}`;
     div.dataset.id = id;
+    
+if (highlights[id]) {
+  div.classList.add(highlights[id]);
+}
 
     div.innerHTML = `<span class="verse-num">${v.verse}</span> ${v.text}`;
 
@@ -99,5 +103,52 @@ window.addEventListener("DOMContentLoaded", () => {
   if (saved === "light") {
     document.body.classList.add("light");
     themeToggle.textContent = "☀️";
+  }
+});
+
+// PALETTE COLOR PICK
+document.querySelectorAll(".palette-colors span").forEach(dot => {
+  dot.onclick = (e) => {
+    e.stopPropagation();
+    if (!activeVerseEl) return;
+
+    const color = dot.dataset.color;
+
+    activeVerseEl.classList.remove(
+      "highlight-yellow",
+      "highlight-green",
+      "highlight-blue",
+      "highlight-pink"
+    );
+
+    activeVerseEl.classList.add(color);
+    highlights[activeVerseId] = color;
+
+    localStorage.setItem("highlights", JSON.stringify(highlights));
+    palette.classList.add("hidden");
+  };
+});
+
+// CLEAR HIGHLIGHT
+clearHighlightBtn.onclick = (e) => {
+  e.stopPropagation();
+  if (!activeVerseEl) return;
+
+  activeVerseEl.classList.remove(
+    "highlight-yellow",
+    "highlight-green",
+    "highlight-blue",
+    "highlight-pink"
+  );
+
+  delete highlights[activeVerseId];
+  localStorage.setItem("highlights", JSON.stringify(highlights));
+  palette.classList.add("hidden");
+};
+
+// CLOSE PALETTE ON OUTSIDE TAP
+document.addEventListener("click", (e) => {
+  if (!palette.contains(e.target) && !e.target.closest(".verse")) {
+    palette.classList.add("hidden");
   }
 });
