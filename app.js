@@ -68,28 +68,39 @@ function loadVerses() {
 
     const id = `${book.name}-${chapter.chapter}-${v.verse}`;
     div.dataset.id = id;
-    
-if (highlights[id]) {
-  div.classList.add(highlights[id]);
-}
-    
-div.innerHTML = `
-  <span class="verse-num">${v.verse}</span>
-  <span class="verse-text">${v.text}</span>
-  <button class="note-btn">📝</button>
-`;
 
-  
-    div.onclick = (e) => {
+    if (highlights[id]) {
+      div.classList.add(highlights[id]);
+    }
+
+    div.innerHTML = `
+      <span class="verse-num">${v.verse}</span>
+      <span class="verse-text">${v.text}</span>
+      <button class="note-btn">📝</button>
+    `;
+
+    // NOTE BUTTON CLICK (STRONG)
+    const noteBtn = div.querySelector(".note-btn");
+    noteBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      openNoteEditor(id);
+    });
+
+    // VERSE CLICK (HIGHLIGHT)
+    div.addEventListener("click", (e) => {
+      if (e.target.classList.contains("note-btn")) return;
+
       e.stopPropagation();
       activeVerseEl = div;
       activeVerseId = id;
       palette.classList.remove("hidden");
-    };
+    });
 
     versesEl.appendChild(div);
   });
 }
+
 
 
 // EVENTS
