@@ -92,12 +92,9 @@ select {
 }
 
 .hidden {
-  pointer-events: none;
-}
-
-.hidden {
   display: none;
 }
+
 
 .palette-colors {
   display: flex;
@@ -128,25 +125,6 @@ select {
   animation: highlightFade 0.25s ease;
 }
 
-@keyframes highlightFade {
-  from {
-    background-color: transparent;
-    body.light .verse {
-  background: #ffffff;
-}
-
-body.light .palette {
-  background: #ffffff;
-  color: #000;
-}
-
-body.light select {
-  background: #ffffff;
-  color: #000;
-}
-
-  }
-}
 /* SEARCH */
 .search-screen {
   padding: 16px;
