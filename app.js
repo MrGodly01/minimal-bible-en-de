@@ -94,24 +94,29 @@ function loadVerses() {
       }
     }
 
-    div.innerHTML = `
-      <div class="verse-en">
-        <span class="verse-num">${v.verse}</span>
-        <span class="verse-text">${v.text}</span>
-      </div>
-      <div class="verse-de">
-        ${deText}
-      </div>
-     <button class="fav-btn">⭐</button>
-<button class="note-btn">📝</button>
+   div.innerHTML = `
+  <div class="verse-en">
+    <span class="verse-num">${v.verse}</span>
+    <span class="verse-text">${v.text}</span>
+  </div>
+
+  <div class="verse-de">
+    ${deText}
+  </div>
+
+  <button class="note-btn">📝</button>
+  <button class="fav-btn">⭐</button>
+`;
+
 // FAVORITE BUTTON
 const favBtn = div.querySelector(".fav-btn");
-if (favorites[id]) {
-  favBtn.classList.add("active");
-}
+
+// restore state
+if (favorites[id]) favBtn.classList.add("active");
 
 favBtn.addEventListener("click", (e) => {
   e.stopPropagation();
+  e.preventDefault();
 
   if (favorites[id]) {
     delete favorites[id];
@@ -129,7 +134,6 @@ favBtn.addEventListener("click", (e) => {
   localStorage.setItem("favorites", JSON.stringify(favorites));
 });
 
-    `;
 
     // NOTE BUTTON
     const noteBtn = div.querySelector(".note-btn");
@@ -338,6 +342,12 @@ const searchScreen = document.getElementById("searchScreen");
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 
+function closeAllScreens() {
+  searchScreen.classList.add("hidden");
+  notesScreen.classList.add("hidden");
+  favoritesScreen.classList.add("hidden");
+}
+
 // Active state helper
 function setActive(btn) {
   document.querySelectorAll(".pixel-btn").forEach(b => b.classList.remove("active"));
@@ -346,13 +356,14 @@ function setActive(btn) {
 
 // HOME
 navHome.onclick = () => {
-  if (searchScreen) searchScreen.classList.add("hidden");
+  closeAllScreens();
   setActive(navHome);
 };
 
 // SEARCH
 navSearch.onclick = () => {
-  if (searchScreen) searchScreen.classList.remove("hidden");
+  closeAllScreens();
+  searchScreen.classList.remove("hidden");
   setActive(navSearch);
 };
 
@@ -364,10 +375,10 @@ navTheme.onclick = () => {
 
 // NOTES (placeholder for now)
 navNotes.onclick = () => {
+  closeAllScreens();
   openNotesScreen();
   setActive(navNotes);
 };
-
 
 // SEARCH
 searchInput.oninput = () => {
