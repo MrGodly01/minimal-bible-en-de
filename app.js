@@ -492,3 +492,12 @@ function jumpToVerse(id) {
     }, 200);
   }, 200);
 }
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("sw.js")
+      .then(() => console.log("PWA ready"))
+      .catch(err => console.error("PWA error", err));
+  });
+}
