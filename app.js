@@ -364,9 +364,10 @@ navTheme.onclick = () => {
 
 // NOTES (placeholder for now)
 navNotes.onclick = () => {
-  alert("Notes coming soon ✍️");
+  openNotesScreen();
   setActive(navNotes);
 };
+
 
 // SEARCH
 searchInput.oninput = () => {
@@ -424,3 +425,59 @@ searchInput.oninput = () => {
     });
   });
 };
+
+const notesScreen = document.getElementById("notesScreen");
+const favoritesScreen = document.getElementById("favoritesScreen");
+
+function openNotesScreen() {
+  notesScreen.innerHTML = "<h2>Notes</h2>";
+
+  Object.keys(notes).forEach(id => {
+    const div = document.createElement("div");
+    div.className = "search-result";
+    div.innerHTML = `
+      <div>${notes[id]}</div>
+      <div class="search-ref">${id}</div>
+    `;
+    div.onclick = () => jumpToVerse(id);
+    notesScreen.appendChild(div);
+  });
+
+  notesScreen.classList.remove("hidden");
+}
+
+function openFavoritesScreen() {
+  favoritesScreen.innerHTML = "<h2>Favorites</h2>";
+
+  Object.values(favorites).forEach(f => {
+    const div = document.createElement("div");
+    div.className = "search-result";
+    div.innerHTML = `
+      <div>${f.text.slice(0, 90)}...</div>
+      <div class="search-ref">${f.book} ${f.chapter}:${f.verse}</div>
+    `;
+    div.onclick = () =>
+      jumpToVerse(`${f.book}-${f.chapter}-${f.verse}`);
+    favoritesScreen.appendChild(div);
+  });
+
+  favoritesScreen.classList.remove("hidden");
+}
+function jumpToVerse(id) {
+  const [book, chapter, verse] = id.split("-");
+  bookSelect.value = book;
+  loadChapters();
+
+  setTimeout(() => {
+    chapterSelect.value = chapter;
+    loadVerses();
+
+    setTimeout(() => {
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("pulse");
+      }
+    }, 200);
+  }, 200);
+}
