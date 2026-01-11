@@ -102,7 +102,33 @@ function loadVerses() {
       <div class="verse-de">
         ${deText}
       </div>
-      <button class="note-btn">📝</button>
+     <button class="fav-btn">⭐</button>
+<button class="note-btn">📝</button>
+// FAVORITE BUTTON
+const favBtn = div.querySelector(".fav-btn");
+if (favorites[id]) {
+  favBtn.classList.add("active");
+}
+
+favBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (favorites[id]) {
+    delete favorites[id];
+    favBtn.classList.remove("active");
+  } else {
+    favorites[id] = {
+      book: book.name,
+      chapter: chapter.chapter,
+      verse: v.verse,
+      text: v.text
+    };
+    favBtn.classList.add("active");
+  }
+
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+});
+
     `;
 
     // NOTE BUTTON
