@@ -132,6 +132,27 @@ chapterSelect.onchange = loadVerses;
 // THEME TOGGLE
 const themeToggle = document.getElementById("themeToggle");
 const langToggle = document.getElementById("langToggle");
+const fontSlider = document.getElementById("fontSlider");
+
+// Load saved font size
+const savedSize = localStorage.getItem("fontSize");
+if (savedSize) {
+  document.documentElement.style.setProperty(
+    "--verse-size",
+    savedSize + "px"
+  );
+  fontSlider.value = savedSize;
+}
+
+// Change font size
+fontSlider.oninput = () => {
+  const size = fontSlider.value;
+  document.documentElement.style.setProperty(
+    "--verse-size",
+    size + "px"
+  );
+  localStorage.setItem("fontSize", size);
+};
 
 // load saved language preference
 const savedLang = localStorage.getItem("lang");
