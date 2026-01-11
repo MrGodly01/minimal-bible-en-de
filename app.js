@@ -131,6 +131,23 @@ bookSelect.onchange = loadChapters;
 chapterSelect.onchange = loadVerses;
 // THEME TOGGLE
 const themeToggle = document.getElementById("themeToggle");
+const langToggle = document.getElementById("langToggle");
+
+// load saved language preference
+const savedLang = localStorage.getItem("lang");
+if (savedLang === "en") {
+  document.body.classList.add("hide-de");
+  langToggle.textContent = "EN";
+}
+
+// toggle language
+langToggle.onclick = () => {
+  document.body.classList.toggle("hide-de");
+
+  const isEnglishOnly = document.body.classList.contains("hide-de");
+  langToggle.textContent = isEnglishOnly ? "EN" : "EN + DE";
+  localStorage.setItem("lang", isEnglishOnly ? "en" : "both");
+};
 
 themeToggle.onclick = () => {
   document.body.classList.toggle("light");
