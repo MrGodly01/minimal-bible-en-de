@@ -10,6 +10,7 @@ let activeVerseId = null;
 // load saved highlights
 let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
 let notes = JSON.parse(localStorage.getItem("notes")) || {};
+let favorites = JSON.parse(localStorage.getItem("favorites")) || {};
 let highlightHistory =
   JSON.parse(localStorage.getItem("highlightHistory")) || [];
 
