@@ -534,3 +534,28 @@ body.light .pixel-btn.active {
   opacity: 1;
   color: gold;
 }
+
+/* APP SCREENS */
+.screen {
+  display: none;
+  padding: 20px;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* HOME */
+.home-btn {
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 18px;
+  background: #222;
+  color: #fff;
+  border: none;
+}
+
+/* SETTINGS */
+.setting-item {
+  margin-bottom: 16px;
+}
