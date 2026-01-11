@@ -14,18 +14,24 @@ let highlightHistory =
   JSON.parse(localStorage.getItem("highlightHistory")) || [];
 
 let bible = [];
+let bibleDE = [];
+
 
 // LOAD BIBLE
-fetch("data/kjv.json")
-  .then(res => res.json())
-  .then(data => {
-    bible = data.books;
-    loadBooks();
-  })
-  .catch(err => {
-    versesEl.innerHTML = "<p style='color:red'>Failed to load Bible</p>";
-    console.error(err);
-  });
+Promise.all([
+  fetch("data/kjv.json").then(r => r.json()),
+  fetch("data/luther1912.json").then(r => r.json())
+])
+.then(([en, de]) => {
+  bible = en.books;
+  bibleDE = de.books || de;
+  loadBooks();
+})
+.catch(err => {
+  versesEl.innerHTML = "<p style='color:red'>Failed to load Bible</p>";
+  console.error("Bible load error:", err);
+});
+
 
 // LOAD BOOKS
 function loadBooks() {
@@ -69,33 +75,45 @@ function loadVerses() {
     const id = `${book.name}-${chapter.chapter}-${v.verse}`;
     div.dataset.id = id;
 
-    if (highlights[id]) {
-      div.classList.add(highlights[id]);
+    if (highlights[id]) div.classList.add(highlights[id]);
+    if (notes[id]) div.classList.add("has-note");
+
+    // --- FIND GERMAN VERSE ---
+    let deText = "—";
+    const deBook = bibleDE.find(b => b.name === book.name);
+    if (deBook) {
+      const deChapter = deBook.chapters.find(
+        c => c.chapter == chapter.chapter
+      );
+      if (deChapter) {
+        const deVerse = deChapter.verses.find(
+          x => x.verse == v.verse
+        );
+        if (deVerse) deText = deVerse.text;
+      }
     }
 
-    if (notes[id]) {
-  div.classList.add("has-note");
-}
-
     div.innerHTML = `
-      <span class="verse-num">${v.verse}</span>
-      <span class="verse-text">${v.text}</span>
+      <div class="verse-en">
+        <span class="verse-num">${v.verse}</span>
+        <span class="verse-text">${v.text}</span>
+      </div>
+      <div class="verse-de">
+        ${deText}
+      </div>
       <button class="note-btn">📝</button>
     `;
 
-    // NOTE BUTTON CLICK (STRONG)
+    // NOTE BUTTON
     const noteBtn = div.querySelector(".note-btn");
     noteBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      e.preventDefault();
       openNoteEditor(id);
     });
 
     // VERSE CLICK (HIGHLIGHT)
     div.addEventListener("click", (e) => {
       if (e.target.classList.contains("note-btn")) return;
-
-      e.stopPropagation();
       activeVerseEl = div;
       activeVerseId = id;
       palette.classList.remove("hidden");
@@ -104,6 +122,7 @@ function loadVerses() {
     versesEl.appendChild(div);
   });
 }
+
 
 
 
