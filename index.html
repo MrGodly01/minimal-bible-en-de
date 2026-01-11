@@ -9,25 +9,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-  <!-- NOTE EDITOR (BOTTOM SHEET) -->
-<div id="noteEditor" class="note-editor hidden">
-  <div class="note-sheet">
-    <textarea
-      id="noteText"
-      placeholder="Write your note..."
-    ></textarea>
-    <button id="saveNote">Save</button>
-  </div>
-</div>
-
-  <!-- PIXEL BOTTOM BAR -->
-<nav class="pixel-bar">
-  <button class="pixel-btn active" id="navHome">🏠</button>
-  <button class="pixel-btn" id="navSearch">🔍</button>
-  <button class="pixel-btn" id="navTheme">🌙</button>
-  <button class="pixel-btn" id="navNotes">📝</button>
-</nav>
-
 <body>
 
   <!-- HEADER -->
@@ -38,17 +19,13 @@
     <button id="langToggle">EN + DE</button>
     <button onclick="undoHighlight()">↩</button>
   </header>
-<div class="font-control">
-  <span>A</span>
-  <input
-    type="range"
-    id="fontSlider"
-    min="14"
-    max="24"
-    value="18"
-  />
-  <span>A</span>
-</div>
+
+  <!-- FONT SIZE -->
+  <div class="font-control">
+    <span>A</span>
+    <input type="range" id="fontSlider" min="14" max="24" value="18" />
+    <span>A</span>
+  </div>
 
   <!-- CONTROLS -->
   <div class="controls">
@@ -57,7 +34,7 @@
   </div>
 
   <!-- VERSES -->
- <main id="verses" class="dual"></main>
+  <main id="verses" class="dual"></main>
 
   <!-- SEARCH SCREEN -->
   <section id="searchScreen" class="search-screen hidden">
@@ -69,8 +46,18 @@
     />
     <div id="searchResults"></div>
   </section>
-<section id="notesScreen" class="search-screen hidden"></section>
-<section id="favoritesScreen" class="search-screen hidden"></section>
+
+  <!-- NOTES & FAVORITES SCREENS -->
+  <section id="notesScreen" class="search-screen hidden"></section>
+  <section id="favoritesScreen" class="search-screen hidden"></section>
+
+  <!-- NOTE EDITOR (BOTTOM SHEET) -->
+  <div id="noteEditor" class="note-editor hidden">
+    <div class="note-sheet">
+      <textarea id="noteText" placeholder="Write your note..."></textarea>
+      <button id="saveNote">Save</button>
+    </div>
+  </div>
 
   <!-- HIGHLIGHT PALETTE -->
   <div id="highlightPalette" class="palette hidden">
@@ -82,6 +69,14 @@
     </div>
     <button id="clearHighlight">Clear</button>
   </div>
+
+  <!-- PIXEL BOTTOM BAR -->
+  <nav class="pixel-bar">
+    <button class="pixel-btn active" id="navHome">🏠</button>
+    <button class="pixel-btn" id="navSearch">🔍</button>
+    <button class="pixel-btn" id="navTheme">🌙</button>
+    <button class="pixel-btn" id="navNotes">📝</button>
+  </nav>
 
   <!-- SCRIPT -->
   <script src="app.js"></script>
