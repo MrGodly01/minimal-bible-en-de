@@ -483,3 +483,14 @@ body.light .pixel-btn.active {
     margin-top: 6px;
   }
 }
+
+/* LANGUAGE TOGGLE */
+.hide-de .verse-de {
+  display: none;
+}
+
+.verse-de {
+  opacity: 0.75;
+  margin-top: 6px;
+  font-size: 0.95em;
+}
