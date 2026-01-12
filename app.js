@@ -3,6 +3,9 @@ const chapterSelect = document.getElementById("chapter");
 const versesEl = document.getElementById("verses");
 const palette = document.getElementById("highlightPalette");
 const clearHighlightBtn = document.getElementById("clearHighlight");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const searchScreen = document.getElementById("searchScreen");
 
 let activeVerseEl = null;
 let activeVerseId = null;
@@ -453,34 +456,6 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.error("PWA error", err));
   });
 }
-
-const homeScreen = document.getElementById("homeScreen");
-const bibleScreen = document.getElementById("bibleScreen");
-const settingsScreen = document.getElementById("settingsScreen");
-
-function showScreen(screen) {
-  homeScreen.classList.remove("active");
-  bibleScreen.classList.remove("active");
-  settingsScreen.classList.remove("active");
-
-  screen.classList.add("active");
-}
-
-function openBible() {
-  showScreen(bibleScreen);
-}
-
-navHome.onclick = () => {
-  showScreen(homeScreen);
-};
-
-navSearch.onclick = () => {
-  showScreen(bibleScreen);
-};
-
-navNotes.onclick = () => {
-  showScreen(settingsScreen);
-};
 
 const navHome = document.getElementById("navHome");
 const navBible = document.getElementById("navBible");
