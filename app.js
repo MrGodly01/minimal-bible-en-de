@@ -49,6 +49,38 @@ function loadBooks() {
   loadChapters();
 }
 
+function loadVerseOfTheDay() {
+  if (!bible.length) return;
+
+  const today = new Date().toDateString();
+  const saved = JSON.parse(localStorage.getItem("dailyVerse"));
+
+  if (saved && saved.date === today) {
+    showDailyVerse(saved);
+    return;
+  }
+
+  const book = bible[Math.floor(Math.random() * bible.length)];
+  const chapter = book.chapters[Math.floor(Math.random() * book.chapters.length)];
+  const verse = chapter.verses[Math.floor(Math.random() * chapter.verses.length)];
+
+  const daily = {
+    date: today,
+    text: verse.text,
+    ref: `${book.name} ${chapter.chapter}:${verse.verse}`,
+    book: book.name,
+    chapter: chapter.chapter
+  };
+
+  localStorage.setItem("dailyVerse", JSON.stringify(daily));
+  showDailyVerse(daily);
+}
+
+function showDailyVerse(data) {
+  document.getElementById("dailyVerseText").textContent = data.text;
+  document.getElementById("dailyVerseRef").textContent = data.ref;
+}
+
 // LOAD CHAPTERS
 function loadChapters() {
   chapterSelect.innerHTML = "";
@@ -65,6 +97,14 @@ function loadChapters() {
 }
 
 // LOAD VERSES
+localStorage.setItem(
+  "lastRead",
+  JSON.stringify({
+    book: book.name,
+    chapter: chapter.chapter
+  })
+);
+
 function loadVerses() {
   versesEl.innerHTML = "";
   const book = bible.find(b => b.name === bookSelect.value);
@@ -497,3 +537,30 @@ navSettings.onclick = () => {
   showScreen(settingsScreen);
   setActiveNav(navSettings);
 };
+
+const continueBox = document.getElementById("continueReading");
+const continueText = document.getElementById("continueText");
+
+function loadContinueReading() {
+  const last = JSON.parse(localStorage.getItem("lastRead"));
+  if (!last) return;
+
+  continueText.textContent = `${last.book} ${last.chapter}`;
+}
+
+continueBox.onclick = () => {
+  const last = JSON.parse(localStorage.getItem("lastRead"));
+  if (!last) return;
+
+  bookSelect.value = last.book;
+  loadChapters();
+
+  setTimeout(() => {
+    chapterSelect.value = last.chapter;
+    loadVerses();
+    showScreen(bibleScreen);
+    setActiveNav(navBible);
+  }, 200);
+};
+
+loadContinueReading();
