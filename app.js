@@ -332,54 +332,6 @@ noteEditor.onclick = (e) => {
   }
 };
 
-// PIXEL NAV BAR LOGIC
-const navHome = document.getElementById("navHome");
-const navSearch = document.getElementById("navSearch");
-const navTheme = document.getElementById("navTheme");
-const navNotes = document.getElementById("navNotes");
-
-const searchScreen = document.getElementById("searchScreen");
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
-
-function closeAllScreens() {
-  searchScreen.classList.add("hidden");
-  notesScreen.classList.add("hidden");
-  favoritesScreen.classList.add("hidden");
-}
-
-// Active state helper
-function setActive(btn) {
-  document.querySelectorAll(".pixel-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-}
-
-// HOME
-navHome.onclick = () => {
-  closeAllScreens();
-  setActive(navHome);
-};
-
-// SEARCH
-navSearch.onclick = () => {
-  closeAllScreens();
-  searchScreen.classList.remove("hidden");
-  setActive(navSearch);
-};
-
-// THEME (reuses your existing theme toggle)
-navTheme.onclick = () => {
-  document.body.classList.toggle("light");
-  setActive(navTheme);
-};
-
-// NOTES (placeholder for now)
-navNotes.onclick = () => {
-  closeAllScreens();
-  openNotesScreen();
-  setActive(navNotes);
-};
-
 // SEARCH
 searchInput.oninput = () => {
   const q = searchInput.value.toLowerCase();
@@ -528,4 +480,45 @@ navSearch.onclick = () => {
 
 navNotes.onclick = () => {
   showScreen(settingsScreen);
+};
+
+const navHome = document.getElementById("navHome");
+const navBible = document.getElementById("navBible");
+const navSettings = document.getElementById("navSettings");
+
+const homeScreen = document.getElementById("homeScreen");
+const bibleScreen = document.getElementById("bibleScreen");
+const settingsScreen = document.getElementById("settingsScreen");
+
+function setActiveNav(btn) {
+  document.querySelectorAll(".nav-btn").forEach(b =>
+    b.classList.remove("active")
+  );
+  btn.classList.add("active");
+}
+
+function showScreen(screen) {
+  homeScreen.classList.remove("active");
+  bibleScreen.classList.remove("active");
+  settingsScreen.classList.remove("active");
+
+  screen.classList.add("active");
+}
+
+// HOME
+navHome.onclick = () => {
+  showScreen(homeScreen);
+  setActiveNav(navHome);
+};
+
+// BIBLE
+navBible.onclick = () => {
+  showScreen(bibleScreen);
+  setActiveNav(navBible);
+};
+
+// SETTINGS
+navSettings.onclick = () => {
+  showScreen(settingsScreen);
+  setActiveNav(navSettings);
 };
