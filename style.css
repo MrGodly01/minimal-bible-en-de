@@ -589,3 +589,46 @@ body.light .pixel-btn.active {
   background: #fff;
   color: #000;
 }
+
+.screen {
+  display: none;
+  padding: 16px;
+}
+
+.screen.active {
+  display: block;
+}
+
+.home-card {
+  background: rgba(255,255,255,0.06);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+body.light .home-card {
+  background: #fff;
+}
+
+.home-card h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.home-card p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.home-card span {
+  opacity: 0.6;
+  font-size: 13px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:active {
+  transform: scale(0.97);
+}
