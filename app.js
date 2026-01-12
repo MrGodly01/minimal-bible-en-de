@@ -66,11 +66,13 @@ Promise.all([
   bible = en.books;
   bibleDE = de.books || de;
   loadBooks();
+  loadVerseOfTheDay();   // ✅ CALL IT HERE
 })
 .catch(err => {
   versesEl.innerHTML = "<p style='color:red'>Failed to load Bible</p>";
   console.error("Bible load error:", err);
 });
+
 
 .then(([en, de]) => {
   bible = en.books;
@@ -95,10 +97,10 @@ function loadVerseOfTheDay() {
   if (!bible.length) return;
 
   const today = new Date().toDateString();
-  const saved = JSON.parse(localStorage.getItem("dailyVerse"));
+  const saved = JSON.parse(localStorage.getItem("verseOfDay"));
 
   if (saved && saved.date === today) {
-    showDailyVerse(saved);
+    renderVerseOfDay(saved);
     return;
   }
 
@@ -106,7 +108,7 @@ function loadVerseOfTheDay() {
   const chapter = book.chapters[Math.floor(Math.random() * book.chapters.length)];
   const verse = chapter.verses[Math.floor(Math.random() * chapter.verses.length)];
 
-  const daily = {
+  const data = {
     date: today,
     text: verse.text,
     ref: `${book.name} ${chapter.chapter}:${verse.verse}`,
@@ -114,14 +116,20 @@ function loadVerseOfTheDay() {
     chapter: chapter.chapter
   };
 
-  localStorage.setItem("dailyVerse", JSON.stringify(daily));
-  showDailyVerse(daily);
+  localStorage.setItem("verseOfDay", JSON.stringify(data));
+  renderVerseOfDay(data);
 }
 
-function showDailyVerse(data) {
-  document.getElementById("dailyVerseText").textContent = data.text;
-  document.getElementById("dailyVerseRef").textContent = data.ref;
+function renderVerseOfDay(data) {
+  const textEl = document.getElementById("dailyVerseText");
+  const refEl = document.getElementById("dailyVerseRef");
+
+  if (!textEl || !refEl) return;
+
+  textEl.textContent = data.text;
+  refEl.textContent = data.ref;
 }
+
 
 // LOAD CHAPTERS
 function loadChapters() {
@@ -139,6 +147,13 @@ function loadChapters() {
 }
 
 // LOAD VERSES
+function loadVerses() {
+  versesEl.innerHTML = "";
+  const book = bible.find(b => b.name === bookSelect.value);
+  const chapter = book.chapters.find(
+    c => c.chapter == chapterSelect.value
+  );
+  
 localStorage.setItem(
   "lastRead",
   JSON.stringify({
@@ -146,13 +161,6 @@ localStorage.setItem(
     chapter: chapter.chapter
   })
 );
-
-function loadVerses() {
-  versesEl.innerHTML = "";
-  const book = bible.find(b => b.name === bookSelect.value);
-  const chapter = book.chapters.find(
-    c => c.chapter == chapterSelect.value
-  );
 
   chapter.verses.forEach(v => {
     const div = document.createElement("div");
