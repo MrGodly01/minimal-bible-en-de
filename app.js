@@ -34,6 +34,12 @@ let activeVerseId = null;
 let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
 let notes = JSON.parse(localStorage.getItem("notes")) || {};
 let favorites = JSON.parse(localStorage.getItem("favorites")) || {};
+// update favorites count on home
+const favCountEl = document.getElementById("favCount");
+if (favCountEl) {
+  favCountEl.textContent = Object.keys(favorites).length;
+}
+
 let highlightHistory = JSON.parse(localStorage.getItem("highlightHistory")) || [];
 
 let bible = [];
@@ -69,11 +75,24 @@ function loadVerseOfTheDay() {
   const chapter = book.chapters[Math.floor(Math.random() * book.chapters.length)];
   const verse = chapter.verses[Math.floor(Math.random() * chapter.verses.length)];
 
-  const data = {
-    date: today,
-    text: verse.text,
-    ref: `${book.name} ${chapter.chapter}:${verse.verse}`
-  };
+// find German verse
+let deText = "—";
+const deBook = bibleDE.find(b => b.name === book.name);
+if (deBook) {
+  const deChapter = deBook.chapters.find(c => c.chapter == chapter.chapter);
+  if (deChapter) {
+    const deVerse = deChapter.verses.find(v => v.verse == verse.verse);
+    if (deVerse) deText = deVerse.text;
+  }
+}
+
+const data = {
+  date: today,
+  text: verse.text,
+  textDE: deText,
+  ref: `${book.name} ${chapter.chapter}:${verse.verse}`
+};
+
 
   localStorage.setItem("verseOfDay", JSON.stringify(data));
   renderVerseOfDay(data);
@@ -82,11 +101,18 @@ function loadVerseOfTheDay() {
 function renderVerseOfDay(data) {
   const textEl = document.getElementById("dailyVerseText");
   const refEl = document.getElementById("dailyVerseRef");
+  const textDE = document.getElementById("dailyVerseTextDE");
+
   if (!textEl || !refEl) return;
 
   textEl.textContent = data.text;
   refEl.textContent = data.ref;
+
+  if (textDE && data.textDE) {
+    textDE.textContent = data.textDE;
+  }
 }
+
 
 // ================== BOOKS / CHAPTERS ==================
 function loadBooks() {
@@ -168,6 +194,11 @@ function loadVerses() {
       favBtn.classList.toggle("active");
       localStorage.setItem("favorites", JSON.stringify(favorites));
     };
+
+    // update home favorites count
+if (favCountEl) {
+  favCountEl.textContent = Object.keys(favorites).length;
+}
 
     div.onclick = () => {
       activeVerseEl = div;
