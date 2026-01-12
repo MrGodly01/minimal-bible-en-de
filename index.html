@@ -24,20 +24,69 @@
   </header>
 
 <!-- HOME SCREEN -->
-<section id="homeScreen" class="screen active">
+<section id="homeScreen" class="screen active home">
 
-  <div class="home-card">
-    <h2>Verse of the Day</h2>
-    <p id="dailyVerseText">Loading...</p>
-    <span id="dailyVerseRef"></span>
+  <!-- Greeting -->
+  <div class="home-header">
+    <div>
+      <h1 id="greeting">Good Afternoon</h1>
+      <p id="todayDate"></p>
+    </div>
+    <button class="icon-btn" id="quickTheme">☀️</button>
   </div>
 
-  <div class="home-card clickable" id="continueReading">
-    <h2>Continue Reading</h2>
-    <p id="continueText">Start reading 📖</p>
+  <!-- Verse of the Day -->
+  <div class="card verse-card">
+    <div class="card-header">
+      <div class="icon yellow">✨</div>
+      <h2>Verse of the Day</h2>
+      <button class="icon-btn">🔗</button>
+    </div>
+
+    <div class="card-content">
+      <small id="dailyVerseRef">Genesis 1:1</small>
+
+      <p class="lang-label">English</p>
+      <p id="dailyVerseText">Loading...</p>
+
+      <hr />
+
+      <p class="lang-label">Deutsch</p>
+      <p id="dailyVerseTextDE">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Quick Access -->
+  <h2 class="section-title">Quick Access</h2>
+
+  <div class="quick-grid">
+    <div class="quick-card blue" id="continueReading">
+      <div class="quick-icon">📖</div>
+      <h3>Continue Reading</h3>
+      <p id="continueText">Start reading</p>
+    </div>
+
+    <div class="quick-card red" onclick="openFavoritesScreen()">
+      <div class="quick-icon">❤️</div>
+      <h3>Favorites</h3>
+      <p><span id="favCount">0</span> saved</p>
+    </div>
+
+    <div class="quick-card green">
+      <div class="quick-icon">🕒</div>
+      <h3>Recent</h3>
+      <p>Last read</p>
+    </div>
+
+    <div class="quick-card purple" onclick="openSearch()">
+      <div class="quick-icon">🔍</div>
+      <h3>Search</h3>
+      <p>Find verses</p>
+    </div>
   </div>
 
 </section>
+
 
 
 <!-- BIBLE SCREEN -->
