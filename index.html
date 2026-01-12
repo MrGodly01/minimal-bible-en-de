@@ -38,12 +38,16 @@
 
 <!-- HOME SCREEN -->
 <section id="homeScreen" class="screen active">
-  <h2>Welcome 👋</h2>
-  <p>Continue reading the Word</p>
+  <div class="home-card">
+    <h2>Verse of the Day</h2>
+    <p id="dailyVerseText">Loading...</p>
+    <span id="dailyVerseRef"></span>
+  </div>
 
-  <button onclick="openBible()" class="home-btn">
-    📖 Open Bible
-  </button>
+  <div class="home-card clickable" id="continueReading">
+    <h2>Continue Reading</h2>
+    <p id="continueText">Start reading 📖</p>
+  </div>
 </section>
 
 <!-- BIBLE SCREEN -->
