@@ -10,6 +10,42 @@ const searchScreen = document.getElementById("searchScreen");
 let activeVerseEl = null;
 let activeVerseId = null;
 
+function loadVerseOfTheDay() {
+  const today = new Date().toDateString();
+  const saved = JSON.parse(localStorage.getItem("verseOfDay"));
+
+  if (saved && saved.date === today) {
+    showVerse(saved);
+    return;
+  }
+
+  // pick random verse
+  const book = bible[Math.floor(Math.random() * bible.length)];
+  const chapter =
+    book.chapters[Math.floor(Math.random() * book.chapters.length)];
+  const verse =
+    chapter.verses[Math.floor(Math.random() * chapter.verses.length)];
+
+  const data = {
+    date: today,
+    text: verse.text,
+    ref: `${book.name} ${chapter.chapter}:${verse.verse}`
+  };
+
+  localStorage.setItem("verseOfDay", JSON.stringify(data));
+  showVerse(data);
+}
+
+function showVerse(data) {
+  const textEl = document.getElementById("dailyVerseText");
+  const refEl = document.getElementById("dailyVerseRef");
+
+  if (!textEl || !refEl) return;
+
+  textEl.textContent = data.text;
+  refEl.textContent = data.ref;
+}
+
 // load saved highlights
 let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
 let notes = JSON.parse(localStorage.getItem("notes")) || {};
@@ -36,6 +72,12 @@ Promise.all([
   console.error("Bible load error:", err);
 });
 
+.then(([en, de]) => {
+  bible = en.books;
+  bibleDE = de.books || de;
+  loadBooks();
+  loadVerseOfTheDay(); // 👈 ADD THIS
+})
 
 // LOAD BOOKS
 function loadBooks() {
