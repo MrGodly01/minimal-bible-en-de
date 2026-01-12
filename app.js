@@ -10,41 +10,6 @@ const searchScreen = document.getElementById("searchScreen");
 let activeVerseEl = null;
 let activeVerseId = null;
 
-function loadVerseOfTheDay() {
-  const today = new Date().toDateString();
-  const saved = JSON.parse(localStorage.getItem("verseOfDay"));
-
-  if (saved && saved.date === today) {
-    showVerse(saved);
-    return;
-  }
-
-  // pick random verse
-  const book = bible[Math.floor(Math.random() * bible.length)];
-  const chapter =
-    book.chapters[Math.floor(Math.random() * book.chapters.length)];
-  const verse =
-    chapter.verses[Math.floor(Math.random() * chapter.verses.length)];
-
-  const data = {
-    date: today,
-    text: verse.text,
-    ref: `${book.name} ${chapter.chapter}:${verse.verse}`
-  };
-
-  localStorage.setItem("verseOfDay", JSON.stringify(data));
-  showVerse(data);
-}
-
-function showVerse(data) {
-  const textEl = document.getElementById("dailyVerseText");
-  const refEl = document.getElementById("dailyVerseRef");
-
-  if (!textEl || !refEl) return;
-
-  textEl.textContent = data.text;
-  refEl.textContent = data.ref;
-}
 
 // load saved highlights
 let highlights = JSON.parse(localStorage.getItem("highlights")) || {};
@@ -55,44 +20,6 @@ let highlightHistory =
 
 let bible = [];
 let bibleDE = [];
-
-
-// LOAD BIBLE
-Promise.all([
-  fetch("data/kjv.json").then(r => r.json()),
-  fetch("data/luther1912.json").then(r => r.json())
-])
-.then(([en, de]) => {
-  bible = en.books;
-  bibleDE = de.books || de;
-  loadBooks();
-  loadVerseOfTheDay();   // ✅ CALL IT HERE
-})
-.catch(err => {
-  versesEl.innerHTML = "<p style='color:red'>Failed to load Bible</p>";
-  console.error("Bible load error:", err);
-});
-
-
-.then(([en, de]) => {
-  bible = en.books;
-  bibleDE = de.books || de;
-  loadBooks();
-  loadVerseOfTheDay(); // 👈 ADD THIS
-})
-
-// LOAD BOOKS
-function loadBooks() {
-  bookSelect.innerHTML = "";
-  bible.forEach(book => {
-    const opt = document.createElement("option");
-    opt.value = book.name;
-    opt.textContent = book.name;
-    bookSelect.appendChild(opt);
-  });
-  loadChapters();
-}
-
 function loadVerseOfTheDay() {
   if (!bible.length) return;
 
@@ -111,9 +38,7 @@ function loadVerseOfTheDay() {
   const data = {
     date: today,
     text: verse.text,
-    ref: `${book.name} ${chapter.chapter}:${verse.verse}`,
-    book: book.name,
-    chapter: chapter.chapter
+    ref: `${book.name} ${chapter.chapter}:${verse.verse}`
   };
 
   localStorage.setItem("verseOfDay", JSON.stringify(data));
@@ -131,7 +56,47 @@ function renderVerseOfDay(data) {
 }
 
 
+// LOAD BIBLE
+Promise.all([
+  fetch("data/kjv.json").then(r => r.json()),
+  fetch("data/luther1912.json").then(r => r.json())
+])
+.then(([en, de]) => {
+  bible = en.books;
+  bibleDE = de.books || de;
+
+  loadBooks();
+  loadVerseOfTheDay(); // ✅ runs AFTER bible loads
+})
+.catch(err => {
+  console.error("Bible load error:", err);
+});
+
+// LOAD BOOKS
+function loadBooks() {
+  bookSelect.innerHTML = "";
+  bible.forEach(book => {
+    const opt = document.createElement("option");
+    opt.value = book.name;
+    opt.textContent = book.name;
+    bookSelect.appendChild(opt);
+  });
+  loadChapters();
+}
+
 // LOAD CHAPTERS
+function loadChapters() {
+  chapterSelect.innerHTML = "";
+  const book = bible.find(b => b.name === bookSelect.value);
+
+  book.chapters.forEach(ch => {
+    const opt = document.createElement("option");
+    opt.value = ch.chapter;
+    opt.textContent = ch.chapter;
+    chapterSelect.appendChild(opt);
+  });
+
+// LOAD VERSES
 function loadChapters() {
   chapterSelect.innerHTML = "";
   const book = bible.find(b => b.name === bookSelect.value);
@@ -145,22 +110,6 @@ function loadChapters() {
 
   loadVerses();
 }
-
-// LOAD VERSES
-function loadVerses() {
-  versesEl.innerHTML = "";
-  const book = bible.find(b => b.name === bookSelect.value);
-  const chapter = book.chapters.find(
-    c => c.chapter == chapterSelect.value
-  );
-  
-localStorage.setItem(
-  "lastRead",
-  JSON.stringify({
-    book: book.name,
-    chapter: chapter.chapter
-  })
-);
 
   chapter.verses.forEach(v => {
     const div = document.createElement("div");
