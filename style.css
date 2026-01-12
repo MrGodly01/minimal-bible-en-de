@@ -538,7 +538,6 @@ body.light .pixel-btn.active {
 /* APP SCREENS */
 .screen {
   display: none;
-  padding: 20px;
 }
 
 .screen.active {
