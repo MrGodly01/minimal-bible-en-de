@@ -239,3 +239,21 @@ themeToggle.onclick = () => {
 // ================== EVENTS ==================
 bookSelect.onchange = loadChapters;
 chapterSelect.onchange = loadVerses;
+
+function updateGreeting() {
+  const h = new Date().getHours();
+  const greeting =
+    h < 12 ? "Good Morning" :
+    h < 18 ? "Good Afternoon" :
+    "Good Evening";
+
+  document.getElementById("greeting").textContent = greeting;
+  document.getElementById("todayDate").textContent =
+    new Date().toLocaleDateString(undefined, {
+      weekday: "long",
+      month: "long",
+      day: "numeric"
+    });
+}
+
+updateGreeting();
