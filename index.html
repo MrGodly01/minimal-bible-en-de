@@ -23,19 +23,6 @@
     <button onclick="undoHighlight()">↩</button>
   </header>
 
-  <!-- FONT SIZE -->
-  <div class="font-control">
-    <span>A</span>
-    <input type="range" id="fontSlider" min="14" max="24" value="18" />
-    <span>A</span>
-  </div>
-
-  <!-- CONTROLS -->
-  <div class="controls">
-    <select id="book"></select>
-    <select id="chapter"></select>
-  </div>
-
 <!-- HOME SCREEN -->
 <section id="homeScreen" class="screen active">
   <div class="home-card">
@@ -50,8 +37,29 @@
   </div>
 </section>
 
+
 <!-- BIBLE SCREEN -->
 <section id="bibleScreen" class="screen">
+
+  <!-- FONT SIZE -->
+  <div class="font-control">
+    <span>A</span>
+    <input type="range" id="fontSlider" min="14" max="24" value="18" />
+    <span>A</span>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <select id="book"></select>
+    <select id="chapter"></select>
+  </div>
+
+  <!-- VERSES -->
+  <main id="verses" class="dual"></main>
+
+</section>
+
+
   <!-- EVERYTHING RELATED TO BIBLE GOES HERE -->
   
   <!-- header -->
@@ -64,13 +72,10 @@
 <section id="settingsScreen" class="screen">
   <h2>Settings</h2>
 
-  <button onclick="toggleTheme()">🌙 Dark / Light</button>
+  <button id="themeToggleBtn">🌙 Dark / Light</button>
   <br /><br />
-  <button onclick="toggleLanguage()">🌐 Language</button>
+  <button id="langToggleBtn">🌐 Language</button>
 </section>
-
-  <!-- VERSES -->
-  <main id="verses" class="dual"></main>
 
   <!-- SEARCH SCREEN -->
   <section id="searchScreen" class="search-screen hidden">
